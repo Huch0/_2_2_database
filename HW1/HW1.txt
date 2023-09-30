@@ -1,0 +1,23 @@
+1. Find the titles of courses in the Computer Science (Comp. Sci.) department that have 3 credits. (6 pts)
+
+2. Find the IDs of all students who were taught by an instructor named Einstein. Make sure there are no duplicates in the result.  (6 pts)
+
+3. Find the highest salary of any instructor. (7 pts)
+
+4. Find the IDs of all instructors earning the highest salary. There may be more than one with the same salary. (7 pts)
+
+5. Find the enrollment of each section that was offered in Fall 2007. (8 pts)
+
+6. Find the maximum number of enrollments, across all sections, in Fall 2007. (8 pts)
+
+7. Find the IDs of sections that had the maximum number of enrollments in Fall 2007. (9 pts)
+
+8. Find the ID and name of each student who has taken at least one Comp. Sci. course; make sure there are no duplicate names in the result.  (9 pts)
+
+9. Find all takes tuples corresponding to any section of any course with the word “advanced” as a part of the title; ignore case when matching the word with the title. (Hint: Use LOWER function in where clause) (10 pts)
+
+10. For each student who has retaken a course at least twice (i.e., the student has taken the course at least three times), show the course ID and the student’s ID. Please display your results in ascending order of course ID and do not display duplicate rows. (10 pts)
+
+11. Find the IDs of those students who have retaken at least three distinct courses at least once (i.e, the student has taken the course at least two times). (10 pts)
+
+12. Find the ID and title of each course in Comp. Sci. that has had at least one section with afternoon hours (i.e., ends at or after 12:00). (You should eliminate duplicates if any.) (10 pts)
