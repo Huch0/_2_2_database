@@ -2,12 +2,11 @@
 SELECT title FROM course WHERE dept_name = 'Comp. Sci.' AND credits = 3;
 
 2. 
-SELECT distinct student.id
-FROM student
-JOIN takes ON student.id = takes.id
-JOIN teaches ON teaches.course_id = takes.course_id
-JOIN instructor ON teaches.id  = instructor.id
-where instructor."name" = 'Einstein';
+SELECT DISTINCT t.id
+FROM takes t
+JOIN teaches tc ON t.course_id = tc.course_id
+JOIN instructor i ON tc.id = i.id
+WHERE i.name = 'Einstein';
 
 3.
 select MAX(salary) from instructor
@@ -21,76 +20,168 @@ WHERE salary = (
 );
 
 5.
-SELECT section.course_id, section.sec_id, COUNT(takes.ID) as enrollment
-FROM section 
-LEFT JOIN takes ON section.course_id = takes.course_id AND section.sec_id = takes.sec_id AND section.semester = takes.semester AND section.year = takes.year
-WHERE section.year = 2007 AND section.semester = 'Fall'
-GROUP BY section.course_id,section.sec_id;
+SELECT
+    s.sec_id,
+    s.course_id,
+    count(t.id) AS enrollments
+FROM
+    section s
+LEFT JOIN
+    takes t ON s.course_id = t.course_id
+           AND s.sec_id = t.sec_id
+           AND s.semester = t.semester
+           AND s.year = t.year
+           AND s.year = 2007
+           AND s.semester = 'Fall'
+GROUP BY
+    s.sec_id,
+    s.course_id;
+
 
 6.
-SELECT MAX(enrollment) as max_enrollment
-FROM (
-    SELECT section.course_id, section.sec_id, COUNT(takes.ID) as enrollment
-    FROM section 
-    LEFT JOIN takes ON section.course_id = takes.course_id AND section.sec_id = takes.sec_id AND section.semester = takes.semester AND section.year = takes.year
-    WHERE section.year = 2007 AND section.semester = 'Fall'
-    GROUP BY section.course_id,section.sec_id
-) AS enrollments;
+select
+	Max(enrollments) as max_enrollments
+from
+	(
+	select
+		s.sec_id,
+		s.course_id,
+		count(t.id) as enrollments
+	from
+		section s
+	left join
+    takes t on
+		s.course_id = t.course_id
+		and s.sec_id = t.sec_id
+		and s.semester = t.semester
+		and s.year = t.year
+		and s.year = 2007
+		and s.semester = 'Fall'
+	group by
+		s.sec_id,
+		s.course_id
+) as enrollment_table;
+
 
 7.
-SELECT section.sec_id
-FROM section 
-LEFT JOIN takes ON section.course_id = takes.course_id AND section.sec_id = takes.sec_id AND section.semester = takes.semester AND section.year = takes.year
-WHERE section.year = 2007 AND section.semester = 'Fall'
-GROUP BY section.course_id,section.sec_id
-HAVING Count(takes.ID) = (
-    SELECT MAX(enrollment) as max_enrollment
-	FROM (
-	    SELECT section.course_id, section.sec_id, COUNT(takes.ID) as enrollment
-	    FROM section 
-	    LEFT JOIN takes ON section.course_id = takes.course_id AND section.sec_id = takes.sec_id AND section.semester = takes.semester AND section.year = takes.year
-	    WHERE section.year = 2007 AND section.semester = 'Fall'
-	    GROUP BY section.course_id,section.sec_id
-	) AS max_enrollments
-);
+SELECT
+    s.sec_id,
+    s.course_id
+FROM
+    section s	
+LEFT JOIN
+    takes t ON s.course_id = t.course_id
+             AND s.sec_id = t.sec_id
+             AND s.semester = t.semester
+             AND s.year = t.year
+             AND s.semester = 'Fall'
+             AND s.year = 2007
+GROUP BY 
+    s.sec_id,
+    s.course_id
+HAVING
+    COUNT(t.id) = (
+        SELECT
+            MAX(enrollments) as max_enrollments
+        FROM
+            (
+            SELECT
+                s.sec_id,
+                s.course_id,
+                COUNT(t.id) as enrollments
+            FROM
+                section s
+            LEFT JOIN
+                takes t ON s.course_id = t.course_id
+                       AND s.sec_id = t.sec_id
+                       AND s.semester = t.semester
+                       AND s.year = t.year
+                       AND s.year = 2007
+                       AND s.semester = 'Fall'
+            GROUP BY
+                s.sec_id,
+                s.course_id
+            ) as enrollment_table
+    );
+
 
 
 8.
-SELECT distinct student.id, student.name
-from student
-join takes on student.id = takes.id 
-join course on takes.course_id = course.course_id
-where course.dept_name = 'Comp. Sci.';
+select
+	distinct s.id,
+	s.name
+from
+	student s
+join takes t on
+	s.id = t.id
+join course c on
+	t.course_id = c.course_id
+where
+	c.dept_name = 'Comp. Sci.';
+
 
 9. 
-SELECT takes. *
-FROM takes
-JOIN course ON takes.course_id = course.course_id
-WHERE LOWER(course.title) LIKE '%advanced%';
+select
+	t.*
+from
+	takes t
+join section s on
+	t.course_id = s.course_id
+	and t.sec_id = s.sec_id
+join course c on
+	s.course_id = c.course_id
+where
+	LOWER(c.title) like '%advanced%';
+
 
 10.
-SELECT takes.course_id, takes.ID
-FROM takes
-GROUP BY takes.course_id, takes.ID
-HAVING COUNT(*) >= 3
-ORDER BY takes.course_id ASC;
+select
+	takes.course_id,
+	takes.ID
+from
+	takes
+group by
+	takes.course_id,
+	takes.ID
+having
+	COUNT(*) >= 3
+order by
+	takes.course_id asc;
 
 11.
-SELECT retakes.ID
-FROM (
-    SELECT takes.course_id, takes.ID
-    FROM takes
-    GROUP BY takes.course_id, takes.ID
-    HAVING COUNT(*) >= 2
-) AS retakes
-GROUP BY retakes.ID
-HAVING COUNT(*) >= 3;
+select
+	retakes.id
+from
+	(
+	select
+		t.course_id,
+		t.id
+	from
+		takes t
+	group by
+		t.course_id,
+		t.ID
+	having
+		COUNT(*) >= 2
+) as retakes
+group by
+	retakes.id
+having
+	COUNT(*) >= 3;
 
 12.
-SELECT DISTINCT c.course_id, c.title
-FROM course c
-JOIN section s ON c.course_id = s.course_id
-JOIN time_slot t ON s.time_slot_id = t.time_slot_id
-WHERE c.dept_name = 'Comp. Sci.' AND (t.end_hr > 12 OR (t.end_hr = 12 AND t.end_min >= 0))
-ORDER BY c.course_id;
+select
+	distinct c.course_id,
+	c.title
+from
+	course c
+join section s on
+	c.course_id = s.course_id
+join time_slot t on
+	s.time_slot_id = t.time_slot_id
+where
+	c.dept_name = 'Comp. Sci.'
+	and t.end_hr >= 12
+order by
+	c.course_id;
 
