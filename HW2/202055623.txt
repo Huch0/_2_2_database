@@ -1,0 +1,129 @@
+1.
+select
+	d.dept_name,
+	(
+	select
+		Max(i.salary)
+	from
+		instructor i
+	where
+		i.dept_name = d.dept_name
+					)
+from
+	department d;
+
+2.
+with max_salaries (dept_name,
+max_salary) as
+(
+select
+	d.dept_name,
+	(
+	select
+		Max(i.salary) as max_salary
+	from
+		instructor i
+	where
+		i.dept_name = d.dept_name
+        )
+from
+	department d
+)
+select
+	min(max_salary)
+from
+	max_salaries;
+
+3.
+select
+	i.id,
+	i.name
+from
+	instructor i
+where
+	not exists (
+	select
+		c.course_id
+	from
+		course c
+	where
+		c.dept_name = i.dept_name
+except
+	select
+		t.course_id
+	from
+		teaches t
+	where
+		t.id = i.id
+)
+order by
+	i.name;
+
+4.
+select
+	i.id,
+	i.name
+from
+	instructor i
+where
+	'A+' not in (
+	select
+		takes.grade
+	from
+		takes
+	join teaches on 
+		takes.course_id = teaches.course_id
+	where
+		teaches.id = i.id
+);
+
+5.
+select
+	t.course_id,
+	t.sec_id,
+	t.year,
+	t.semester,
+	COUNT(t.id) as num
+from
+	takes t
+group by
+	t.course_id,
+	t.sec_id,
+	t.year,
+	t.semester
+having
+	COUNT(t.id) > 0;
+
+6.
+with sec_enrollments (course_id,
+sec_id,
+year,
+semester,
+num) as
+(
+select
+	t.course_id,
+	t.sec_id,
+	t.year,
+	t.semester,
+	COUNT(t.id) as num
+from
+	takes t
+group by
+	t.course_id,
+	t.sec_id,
+	t.year,
+	t.semester
+having
+	COUNT(t.id) > 0
+)
+select
+	s.*
+from
+	sec_enrollments s
+where
+	s.num = (
+	select
+		max(num)
+	from
+		sec_enrollments);
