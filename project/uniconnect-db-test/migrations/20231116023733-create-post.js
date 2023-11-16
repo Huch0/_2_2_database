@@ -19,7 +19,7 @@ module.exports = {
       },
       lab_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,  // lab_id can be null if the post is not associated with a lab
         references: {
           model: "Labs",
           key: "id",
