@@ -1,31 +1,34 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("Comments", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      username: {
-        type: Sequelize.STRING(50),
+      post_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true,
+        references: {
+          model: "Posts",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      password: {
-        type: Sequelize.STRING(50),
+      author_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      role: {
-        type: Sequelize.ENUM(
-          "reader",
-          "student",
-          "researcher",
-          "lab_manager",
-          "admin",
-          "banned"
-        ),
+      content: {
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -33,17 +36,16 @@ module.exports = {
         defaultValue: Sequelize.NOW,
       },
       updatedAt: {
-        type: Sequelize.DATE,
         allowNull: false,
+        type: Sequelize.DATE,
       },
       deletedAt: {
-        type: Sequelize.DATE,
         allowNull: true,
+        type: Sequelize.DATE,
       },
-      // Add other fields as necessary
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("Comments");
   },
 };
