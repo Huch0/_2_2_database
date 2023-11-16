@@ -30,10 +30,18 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      date_posted: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
       },
     });
   },
