@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "init-db": "node ./models/index.js",
+    "test-api": "node ./src/app/api/getRecentPosts/route.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -15,7 +17,8 @@
     "pg-hstore": "^2.3.4",
     "react": "^18",
     "react-dom": "^18",
-    "sequelize": "^6.34.0"
+    "sequelize": "^6.34.0",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
