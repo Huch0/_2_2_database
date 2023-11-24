@@ -8,6 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      title: {
+          type: Sequelize.STRING,
+          allowNull: false,
+      },
+      content: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
       author_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -25,10 +33,6 @@ module.exports = {
           key: "id",
         },
         onDelete: "CASCADE",
-      },
-      content: {
-        type: Sequelize.TEXT,
-        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,

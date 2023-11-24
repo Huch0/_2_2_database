@@ -1,19 +1,12 @@
 import Link from "next/link";
+import { fetch_posts } from "@/../db/api/post";
 
-const posts = [
-  {
-    id: 1,
-    title: "First Post",
-    content: "This is the first post.",
-  },
-  {
-    id: 2,
-    title: "Second Post",
-    content: "This is the second post.",
-  },
-];
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
-export default function Feed() {
+export default async function Feed() {
+  const posts = await getData();
+  // console.log(posts);
+
   return (
     <div className="flex flex-col space-y-4">
       {posts.map((post) => (
@@ -21,10 +14,20 @@ export default function Feed() {
           <h2 className="text-xl font-bold mb-2">{post.title}</h2>
           <p className="text-gray-700">{post.content}</p>
           <Link href={`/post/${post.id}`}>
-            <div className="text-blue-500 hover:underline mt-2 inline-block">Read more</div>
+            <div className="text-blue-500 hover:underline mt-2 inline-block">
+              Read more
+            </div>
           </Link>
         </div>
       ))}
     </div>
   );
+}
+
+export async function getData() {
+  const posts = await fetch_posts();
+
+  // const posts = await res.json();
+
+  return posts;
 }

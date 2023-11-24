@@ -11,10 +11,6 @@ module.exports = {
           key: "id",
         },
       },
-      name: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-      },
       school_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -46,6 +42,7 @@ module.exports = {
           "doctoral",
           "professor"
         ),
+        defaultValue: "undergraduate",
         allowNull: true,
       },
       createdAt: {
