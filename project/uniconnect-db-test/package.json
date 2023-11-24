@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "init-db": "node ./models/index.js",
-    "test-api": "node ./src/app/api/getRecentPosts/route.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
