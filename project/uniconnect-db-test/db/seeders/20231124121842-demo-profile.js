@@ -13,68 +13,61 @@ module.exports = {
      * }], {});
      */
     await queryInterface.bulkInsert(
-      "Users",
+      "Profiles",
       [
         {
-          id: 1,
-          user_name: "허치영",
-          email: "cldud1@pusan.ac.kr",
-          password: "password",
-          role: "researcher",
+          // 허치영 프로필
+          user_id: 1,
+          school_id: 1, // 부산대학교
+          major_id: 1, // 정보컴퓨터공학부
+          lab_id: 1, // 데이터인텔리전스 연구실
+          degree: "master",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 2,
-          user_name: "하현진",
-          email: "hyeonjin1@pusan.ac.kr",
-          password: "password",
-          role: "student",
+          // 하현진 프로필
+          user_id: 2,
+          school_id: 1, // 부산대학교
+          major_id: 1, // 정보컴퓨터공학부
+          degree: "undergraduate",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 3,
-          user_name: "Cho Joon Soo",
-          email: "jscho@pusan.ac.kr",
-          password: "password",
-          role: "lab_manager",
+          // Cho Joon Soo 프로필
+          user_id: 3,
+          school_id: 1, // 부산대학교
+          major_id: 1, // 정보컴퓨터공학부
+          lab_id: 1, // 데이터인텔리전스 연구실
+          degree: "professor",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 4,
-          user_name: "서 준",
-          email: "dntjd@pusan.ac.kr",
-          password: "password",
-          role: "student",
+          // 서 준 프로필
+          user_id: 4,
+          school_id: 1, // 부산대학교
+          major_id: 2, // 수학과
+          degree: "undergraduate",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 5,
-          user_name: "주우성",
-          email: "tjwns@pusan.ac.kr",
-          password: "password",
-          role: "admin",
+          // 주우성 프로필
+          user_id: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 6,
-          user_name: "김민혁",
-          email: "alsgur1@pusan.ac.kr",
-          password: "password",
-          role: "reader",
+          // 김민혁 프로필
+          user_id: 6,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          id: 7,
-          user_name: "이근우",
-          email: "rmsdn1@pusan.ac.kr",
-          password: "password",
-          role: "reader",
+          // 이근우 프로필
+          user_id: 7,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -90,6 +83,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    await queryInterface.bulkDelete("Users", null, {});
+    await queryInterface.bulkDelete("Profiles", null, {});
   },
 };
