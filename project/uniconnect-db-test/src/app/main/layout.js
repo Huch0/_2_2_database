@@ -18,30 +18,7 @@ export default function MainLayout({ children }) {
             />
           </div>
         </div>
-        <nav className="bg-gray-200">
-          <ul className="flex justify-center">
-            <li className="mr-6">
-              <Link href="/main/feed" className="text-blue-500 hover:text-blue-800">
-                Feed
-              </Link>
-            </li>
-            <li className="mr-6">
-              <Link href="/main/scrap" className="text-blue-500 hover:text-blue-800">
-                Scrap
-              </Link>
-            </li>
-            <li className="mr-6">
-              <Link
-                href="/main/subscription"
-                className="text-blue-500 hover:text-blue-800"
-              >
-                Subscription
-              </Link>
-            </li>
-          </ul>
-        </nav>
       </header>
-
       <main>{children}</main>
     </div>
   );
