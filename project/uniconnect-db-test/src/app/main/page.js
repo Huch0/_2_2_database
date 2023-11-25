@@ -23,7 +23,11 @@ export default function Home() {
         setFetchedData={setFetchedData}
         setContentType={setContentType}
       />
-      <ContentDisplay fetchedData={fetchedData} contentType={contentType} />
+      <ContentDisplay
+        fetchedData={fetchedData}
+        contentType={contentType}
+        selectedUser={selectedUser}
+      />
     </div>
   );
 }
