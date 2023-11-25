@@ -24,7 +24,7 @@ const functionList = [
   },
   {
     id: 3,
-    name: "전공 수정하기",
+    name: "전공 등록하기",
     available_role: ["reader", "student", "researcher", "lab_manager"],
     contentType: "majorEditor",
     onClick: (setContentType, setFetchedData) => {
