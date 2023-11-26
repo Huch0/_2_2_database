@@ -40,10 +40,10 @@ function RequestCard({ request }) {
   );
 }
 
-export default function ManagerRequestList({ data }) {
+export default function ManagerRequestList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {dummy_requests.map((request) => (
+      {fetchedData.map((request) => (
         <RequestCard key={request.id} request={request} />
       ))}
     </div>
