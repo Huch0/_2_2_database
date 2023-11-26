@@ -10,3 +10,14 @@ export async function getContactsByLabId(id) {
 
   return contacts;
 }
+
+export async function getContactByStudentId(id) {
+  const contacts = await Contact.findAll({
+    where: {
+      student_id: id,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  return contacts;
+}
