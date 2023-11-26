@@ -5,6 +5,27 @@ function ContactCard({ contact }) {
   const handleConfirm = () => {};
   const handleCancel = () => {};
 
+  let cardColor;
+  let statusMessage;
+  switch (contact.status) {
+    case "pending":
+      cardColor = "bg-green-100";
+      statusMessage = "대기중";
+      break;
+    case "accepted":
+      cardColor = "bg-blue-200";
+      statusMessage = "수락됨";
+      break;
+    case "rejected":
+      cardColor = "bg-red-200";
+      statusMessage = "거절됨";
+      break;
+    default:
+      cardColor = "bg-white";
+      statusMessage = "알 수 없음";
+      break;
+  }
+
   const [student, setStudent] = useState(null);
   const [studentProfile, setStudentProfile] = useState(null);
   const [school, setSchool] = useState(null);
@@ -23,7 +44,9 @@ function ContactCard({ contact }) {
   }, [studentProfile]);
 
   return (
-    <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
+    <div
+      className={`flex shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between ${cardColor}`}
+    >
       <div className="flex items-start px-4 py-6">
         <div className="">
           <h1 className="text-lg font-semibold">
@@ -39,20 +62,25 @@ function ContactCard({ contact }) {
           </p>
         </div>
       </div>
-      <div className="flex justify-end space-x-4 p-4">
-        <button
-          onClick={handleConfirm}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          수락
-        </button>
-        <button
-          onClick={handleCancel}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-        >
-          거절
-        </button>
+      <div className="p-4">
+        <p>{statusMessage}</p>
       </div>
+      {contact.status === "pending" && (
+        <div className="flex justify-end space-x-4 p-4">
+          <button
+            onClick={handleConfirm}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            수락
+          </button>
+          <button
+            onClick={handleCancel}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            거절
+          </button>
+        </div>
+      )}
     </div>
   );
 }
