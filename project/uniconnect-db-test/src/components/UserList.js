@@ -1,11 +1,3 @@
-const dummy_users = [
-  {
-    id: 1,
-    user_name: "김철수",
-    role: "student",
-  },
-];
-
 function UserCard({ user }) {
   const handleBan = () => {};
 
@@ -31,10 +23,10 @@ function UserCard({ user }) {
   );
 }
 
-export default function UserList({ data }) {
+export default function UserList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {dummy_users.map((user) => (
+      {fetchedData.map((user) => (
         <UserCard key={user.id} user={user} />
       ))}
     </div>
