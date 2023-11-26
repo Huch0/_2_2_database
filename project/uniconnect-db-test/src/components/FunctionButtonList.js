@@ -69,7 +69,7 @@ const functionList = [
     contentType: "labContact",
     onClick: (setContentType, setFetchedData) => {
       setContentType("labContact");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData("/api/degree", setFetchedData);
     },
   },
   {

@@ -1,19 +1,3 @@
-const dummy_contacts = [
-  {
-    student_id: 2,
-    lab_id: 1,
-  },
-];
-
-const dummy_student_profiles = [
-  {
-    id: 2,
-    user_name: "김철수",
-    school_id: 1,
-    major_id: 1,
-  },
-];
-
 function ContactCard({ student_id, selectedUser }) {
   const student_profile = dummy_student_profiles.find(
     (profile) => profile.id === student_id
@@ -57,10 +41,10 @@ function ContactCard({ student_id, selectedUser }) {
   );
 }
 
-export default function LabContactList({ data, selectedUser }) {
+export default function LabContactList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {dummy_contacts.map((contact) => (
+      {fetchedData.map((contact) => (
         <ContactCard
           key={contact.student_id}
           student_id={contact.student_id}
