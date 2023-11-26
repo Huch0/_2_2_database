@@ -7,12 +7,12 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import { getAllManager_requests } from "@/../db/api/contact";
+import { getLabByManagerId } from "@/../db/api/lab";
 
-export async function GET(Request) {
-  const manger_requests = await getAllManager_requests();
+export async function GET(Request, { params }) {
+  const lab = await getLabByManagerId(params.managerId);
 
   //console.log(users);
 
-  return NextResponse.json(manger_requests);
+  return NextResponse.json(lab);
 }

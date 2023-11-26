@@ -26,9 +26,8 @@ function UserCard({ user }) {
 export default function UserList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {fetchedData.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
+      {fetchedData &&
+        fetchedData.map((user) => <UserCard key={user.id} user={user} />)}
     </div>
   );
 }

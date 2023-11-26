@@ -40,6 +40,7 @@ const init_profiles = (sequelize, Types) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: "Users",
           key: "id",

@@ -69,7 +69,8 @@ const functionList = [
     contentType: "labContact",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labContact");
-      fetchData("/api/degree", setFetchedData);
+      // selectedUser 가 lab_manager 일 때만 작동
+      fetchData(`/api/contact/${selectedUser.id}`, setFetchedData);
     },
   },
   {
@@ -89,7 +90,7 @@ const functionList = [
     contentType: "user",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("user");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData("/api/user", setFetchedData);
     },
   },
 ];

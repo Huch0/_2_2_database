@@ -7,3 +7,13 @@ export async function getAllLabs() {
 
   return labs;
 }
+
+export async function getLabByManagerId(id) {
+  const lab = await Lab.findOne({
+    where: {
+      manager_id: id,
+    },
+  });
+
+  return lab;
+}

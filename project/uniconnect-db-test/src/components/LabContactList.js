@@ -1,25 +1,41 @@
-function ContactCard({ student_id, selectedUser }) {
-  const student_profile = dummy_student_profiles.find(
-    (profile) => profile.id === student_id
-  );
+import { useEffect, useState } from "react";
+import fetchData from "@/utils/fetchData";
 
+function ContactCard({ contact }) {
   const handleConfirm = () => {};
   const handleCancel = () => {};
+
+  const [student, setStudent] = useState(null);
+  const [studentProfile, setStudentProfile] = useState(null);
+  const [school, setSchool] = useState(null);
+  const [major, setMajor] = useState(null);
+
+  useEffect(() => {
+    fetchData(`/api/user/${contact.student_id}`, setStudent);
+    fetchData(`/api/profile/${contact.student_id}`, setStudentProfile);
+  }, []);
+
+  useEffect(() => {
+    if (studentProfile) {
+      fetchData(`/api/school/${studentProfile.school_id}`, setSchool);
+      fetchData(`/api/major/${studentProfile.major_id}`, setMajor);
+    }
+  }, [studentProfile]);
+
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
       <div className="flex items-start px-4 py-6">
         <div className="">
-          <h1 className="text-lg font-semibold">{student_profile.user_name}</h1>
+          <h1 className="text-lg font-semibold">
+            {student && student.user_name}
+          </h1>
           <div className="flex items-center justify-between">
             <h2 className="text-lg text-gray-900 -mt-1">
-              {
-                student_profile.school_id /* school_id를 school_name으로 바꾸세요. */
-              }
+              {school && school.school_name}
             </h2>
           </div>
           <p className="mt-3 text-gray-700 text-sm">
-            {student_profile.major_id}{" "}
-            {/* major_id를 major_name으로 바꾸세요. */}
+            {major && major.major_name}
           </p>
         </div>
       </div>
@@ -44,13 +60,10 @@ function ContactCard({ student_id, selectedUser }) {
 export default function LabContactList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {fetchedData.map((contact) => (
-        <ContactCard
-          key={contact.student_id}
-          student_id={contact.student_id}
-          selectedUser={selectedUser}
-        />
-      ))}
+      {fetchedData &&
+        fetchedData.map((contact) => (
+          <ContactCard key={contact.student_id} contact={contact} />
+        ))}
     </div>
   );
 }
