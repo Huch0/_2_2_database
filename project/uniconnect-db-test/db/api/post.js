@@ -1,8 +1,7 @@
 import { Post } from "../models/index.js";
 
-export async function fetch_posts() {
+export async function getAllPosts() {
   const posts = await Post.findAll({
-    limit: 3,
     order: [["createdAt", "DESC"]],
   });
 
