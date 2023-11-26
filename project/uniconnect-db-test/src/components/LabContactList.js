@@ -32,9 +32,10 @@ function ContactCard({ contact }) {
   const [major, setMajor] = useState(null);
 
   useEffect(() => {
+    if (!contact.student_id) return;
     fetchData(`/api/user/${contact.student_id}`, setStudent);
     fetchData(`/api/profile/${contact.student_id}`, setStudentProfile);
-  }, []);
+  }, [contact]);
 
   useEffect(() => {
     if (studentProfile) {
