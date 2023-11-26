@@ -29,6 +29,7 @@ const init_likes = (sequelize, Types) => {
       post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: "Posts",
           key: "id",
@@ -38,6 +39,7 @@ const init_likes = (sequelize, Types) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: "Users",
           key: "id",
@@ -51,8 +53,11 @@ const init_likes = (sequelize, Types) => {
       tableName: "Likes",
       charset: "utf8",
       collate: "utf8_general_ci",
+      timestamps: true,
+      createdAt: true,
+      updatedAt: false,
       // table will use the UTF-8 character set, and case-insensitive comparisons will be used when querying data.
-    },
+    }
   );
 
   return Like;

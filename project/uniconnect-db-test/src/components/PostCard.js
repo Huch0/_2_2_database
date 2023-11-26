@@ -1,33 +1,19 @@
-import React, { useState } from "react";
-import "./css/PostCard.css";
-
-// const PostCard = ({}) => {
-//   return (
-//     <div classNameName="feedCard">
-//       <h2 classNameName="title">{title}</h2>
-//       <p classNameName="content">{content}</p>
-//       <p classNameName="author">{author}</p>
-//       <div classNameName="buttons">
-//         <button onClick={handleLike}>좋아요</button>
-//         <button onClick={handleComment}>댓글</button>
-//         <button onClick={handleSubscribe}>구독</button>
-//       </div>
-//       <div classNameName="comments">
-//         {comments.map((comment, index) => (
-//           <p key={index}>{comment}</p>
-//         ))}
-//       </div>
-//       <div classNameName="commentInput">
-//         <input type="text" value={comment} onChange={handleCommentChange} />
-//         <button onClick={handleCommentSubmit}>등록</button>
-//       </div>
-//     </div>
-//   );
-// };
+import React, { useEffect, useState } from "react";
+import fetchData from "@/utils/fetchData";
+import moment from "moment";
 
 export default function PostCard({ post, selectedUser }) {
   const [comment, setComment] = useState("");
+
+  const [author, setAuthor] = useState(null);
+  const [likes, setLikes] = useState(null);
   const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    fetchData(`/api/user/${post.author_id}`, setAuthor);
+    fetchData(`/api/like/${post.id}`, setLikes);
+    fetchData(`/api/comment/${post.id}`, setComments);
+  }, []);
 
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
@@ -61,9 +47,11 @@ export default function PostCard({ post, selectedUser }) {
           <h1 className="text-lg font-semibold">{post.title} </h1>
           <div className="flex items-center justify-between">
             <h2 className="text-lg text-gray-900 -mt-1">
-              {post.author_id /* author_id를 author_name으로 바꾸세요. */}
+              {author && author.user_name}
             </h2>
-            <small className="text-sm text-gray-700">{post.createdAt}</small>
+            <small className="text-sm text-gray-700">
+              {moment(post.createdAt).fromNow()}
+            </small>
           </div>
           <p className="mt-3 text-gray-700 text-sm h-48">{post.content}</p>
           <div className="mt-4 flex items-center">
@@ -82,7 +70,7 @@ export default function PostCard({ post, selectedUser }) {
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                   />
                 </svg>
-                <span>좋아요 개수</span>
+                <span>{likes && likes.length}</span>
               </button>
               <button className="flex mr-2 text-gray-700 text-sm mr-8">
                 <svg
@@ -98,7 +86,7 @@ export default function PostCard({ post, selectedUser }) {
                     d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                   />
                 </svg>
-                <span>댓글 수</span>
+                <span>{comments && comments.length}</span>
               </button>
               {
                 // post.author_id가 selectedUser.id와 같으면 보임.

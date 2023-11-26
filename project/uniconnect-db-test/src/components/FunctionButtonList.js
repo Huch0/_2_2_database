@@ -7,7 +7,7 @@ const functionList = [
     name: "글 목록",
     available_role: ["reader", "student", "researcher", "lab_manager", "admin"],
     contentType: "post",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
       fetchData("/api/post", setFetchedData);
     },
@@ -17,9 +17,9 @@ const functionList = [
     name: "연구실 목록",
     available_role: ["reader", "student", "researcher", "lab_manager", "admin"],
     contentType: "lab",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("lab");
-      // fetchData("/api/lab", setFetchedData);
+      fetchData("/api/lab", setFetchedData);
     },
   },
   {
@@ -27,7 +27,7 @@ const functionList = [
     name: "전공 등록하기",
     available_role: ["reader", "student", "researcher", "lab_manager"],
     contentType: "majorEditor",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("majorEditor");
       // fetchData("/api/major", setFetchedData);
     },
@@ -37,7 +37,7 @@ const functionList = [
     name: "학위 등록하기",
     available_role: ["student", "researcher", "lab_manager"],
     contentType: "degreeEditor",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("degreeEditor");
       // fetchData("/api/degree", setFetchedData);
     },
@@ -47,7 +47,7 @@ const functionList = [
     name: "글 작성",
     available_role: ["researcher", "lab_manager"],
     contentType: "postEditor",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
       // fetchData("/api/degree", setFetchedData);
     },
@@ -57,9 +57,9 @@ const functionList = [
     name: "내 작성글",
     available_role: ["researcher", "lab_manager"],
     contentType: "post",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData(`/api/post/${selectedUser.id}`, setFetchedData);
     },
   },
   {
@@ -67,7 +67,7 @@ const functionList = [
     name: "연구실 컨택 요청보기",
     available_role: ["lab_manager"],
     contentType: "labContact",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labContact");
       // fetchData("/api/degree", setFetchedData);
     },
@@ -77,7 +77,7 @@ const functionList = [
     name: "연구실 관리자 신청 보기",
     available_role: ["admin"],
     contentType: "labManagerRequest",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labManagerRequest");
       // fetchData("/api/degree", setFetchedData);
     },
@@ -87,7 +87,7 @@ const functionList = [
     name: "유저 관리",
     available_role: ["admin"],
     contentType: "user",
-    onClick: (setContentType, setFetchedData) => {
+    onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("user");
       // fetchData("/api/degree", setFetchedData);
     },
@@ -107,7 +107,9 @@ export default function FunctionButtonList({
             <button
               key={func.id}
               className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden font-medium rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 focus:ring-4 focus:outline-none focus:ring-cyan-200"
-              onClick={() => func.onClick(setContentType, setFetchedData)}
+              onClick={() =>
+                func.onClick(setContentType, setFetchedData, selectedUser)
+              }
             >
               <span className="relative px-5 py-2.5 text-black hover:text-white transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                 {func.name}
