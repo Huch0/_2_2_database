@@ -18,7 +18,7 @@ export default function PostCard({ post, selectedUser }) {
     fetchData(`/api/user/${post.author_id}`, setAuthor);
     fetchData(`/api/like/${post.id}`, setLikes);
     fetchData(`/api/comment/${post.id}`, setComments);
-  }, [post]);
+  }, [post]); // [post, liked]
 
   useEffect(() => {
     if (!likes) {
