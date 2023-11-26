@@ -17,3 +17,13 @@ export async function getLabByManagerId(id) {
 
   return lab;
 }
+
+export async function getLabById(id) {
+  const lab = await Lab.findOne({
+    where: {
+      id,
+    },
+  });
+
+  return lab;
+}

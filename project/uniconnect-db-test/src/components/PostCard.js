@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "@/utils/fetchData";
 import moment from "moment";
+import CommentCard from "@/components/CommentCard";
 
 export default function PostCard({ post, selectedUser }) {
-  const [comment, setComment] = useState("");
-
   const [author, setAuthor] = useState(null);
   const [likes, setLikes] = useState(null);
+  const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
+
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     if (!post.author_id) {
@@ -16,24 +18,18 @@ export default function PostCard({ post, selectedUser }) {
     fetchData(`/api/user/${post.author_id}`, setAuthor);
     fetchData(`/api/like/${post.id}`, setLikes);
     fetchData(`/api/comment/${post.id}`, setComments);
-  }, [post]);
+  }, [post]); // [post, liked]
+
+  useEffect(() => {
+    if (!likes) {
+      return;
+    }
+    const likedUserIds = likes.map((like) => like.user_id);
+    setLiked(likedUserIds.includes(selectedUser.id));
+  }, [likes, selectedUser]);
 
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
-  };
-
-  const handleComment = () => {
-    // 댓글 로직을 구현하세요.
-  };
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
-  const handleCommentSubmit = () => {
-    // 댓글 등록 로직을 구현하세요.
-    // 예시: setComments([...comments, comment]);
-    setComment("");
   };
 
   const handleDelete = () => {
@@ -45,7 +41,7 @@ export default function PostCard({ post, selectedUser }) {
 
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full">
-      <div className="flex items-start px-4 py-6">
+      <div className="flex flex-col items-start px-4 py-6">
         <div className="">
           <h1 className="text-lg font-semibold">{post.title} </h1>
           <div className="flex items-center justify-between">
@@ -59,9 +55,13 @@ export default function PostCard({ post, selectedUser }) {
           <p className="mt-3 text-gray-700 text-sm h-48">{post.content}</p>
           <div className="mt-4 flex items-center">
             <div className="flex justify-end space-x-4 p-4">
-              <button className="flex mr-2 text-gray-700 text-sm mr-3">
+              {/* Like Button */}
+              <button
+                className="flex mr-2 text-red-500 text-sm mr-3"
+                onClick={() => setLiked(!liked)}
+              >
                 <svg
-                  fill="none"
+                  fill={liked ? "currentColor" : "none"}
                   viewBox="0 0 24 24"
                   className="w-4 h-4 mr-1"
                   stroke="currentColor"
@@ -75,9 +75,13 @@ export default function PostCard({ post, selectedUser }) {
                 </svg>
                 <span>{likes && likes.length}</span>
               </button>
-              <button className="flex mr-2 text-gray-700 text-sm mr-8">
+              {/* Comment Button */}
+              <button
+                className="flex mr-2 text-blue-500 text-sm mr-8"
+                onClick={() => setShowComments(!showComments)}
+              >
                 <svg
-                  fill="none"
+                  fill={showComments ? "currentColor" : "none"}
                   viewBox="0 0 24 24"
                   className="w-4 h-4 mr-1"
                   stroke="currentColor"
@@ -113,6 +117,10 @@ export default function PostCard({ post, selectedUser }) {
             </div>
           </div>
         </div>
+
+        {showComments && (
+          <CommentCard comments={comments} selectedUser={selectedUser} />
+        )}
       </div>
     </div>
   );
