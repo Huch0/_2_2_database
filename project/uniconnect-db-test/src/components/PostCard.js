@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "@/utils/fetchData";
 import moment from "moment";
+import CommentCard from "@/components/CommentCard";
 
 export default function PostCard({ post, selectedUser }) {
-  const [comment, setComment] = useState("");
-
   const [author, setAuthor] = useState(null);
   const [likes, setLikes] = useState(null);
   const [comments, setComments] = useState([]);
+
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     if (!post.author_id) {
@@ -18,22 +19,12 @@ export default function PostCard({ post, selectedUser }) {
     fetchData(`/api/comment/${post.id}`, setComments);
   }, [post]);
 
+  const handleCommentButtonClick = () => {
+    setShowComments(!showComments);
+  };
+
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
-  };
-
-  const handleComment = () => {
-    // 댓글 로직을 구현하세요.
-  };
-
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
-
-  const handleCommentSubmit = () => {
-    // 댓글 등록 로직을 구현하세요.
-    // 예시: setComments([...comments, comment]);
-    setComment("");
   };
 
   const handleDelete = () => {
@@ -45,7 +36,7 @@ export default function PostCard({ post, selectedUser }) {
 
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full">
-      <div className="flex items-start px-4 py-6">
+      <div className="flex flex-col items-start px-4 py-6">
         <div className="">
           <h1 className="text-lg font-semibold">{post.title} </h1>
           <div className="flex items-center justify-between">
@@ -75,7 +66,11 @@ export default function PostCard({ post, selectedUser }) {
                 </svg>
                 <span>{likes && likes.length}</span>
               </button>
-              <button className="flex mr-2 text-gray-700 text-sm mr-8">
+              {/* Comment Button */}
+              <button
+                className="flex mr-2 text-gray-700 text-sm mr-8"
+                onClick={handleCommentButtonClick}
+              >
                 <svg
                   fill="none"
                   viewBox="0 0 24 24"
@@ -113,6 +108,10 @@ export default function PostCard({ post, selectedUser }) {
             </div>
           </div>
         </div>
+
+        {showComments && (
+          <CommentCard comments={comments} selectedUser={selectedUser} />
+        )}
       </div>
     </div>
   );
