@@ -19,7 +19,7 @@ const functionList = [
     contentType: "lab",
     onClick: (setContentType, setFetchedData) => {
       setContentType("lab");
-      // fetchData("/api/lab", setFetchedData);
+      fetchData("/api/lab", setFetchedData);
     },
   },
   {

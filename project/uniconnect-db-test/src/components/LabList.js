@@ -1,14 +1,5 @@
 import React from "react";
 
-const dummy_labs = [
-  {
-    id: 1,
-    lab_name: "연구실 이름",
-    description: "연구실 설명",
-    manager_id: 3,
-    school_id: 1,
-  },
-];
 function LabCard({ lab, selectedUser }) {
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
@@ -44,10 +35,11 @@ function LabCard({ lab, selectedUser }) {
   );
 }
 
-export default function LabList({ data, selectedUser }) {
+export default function LabList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
-      {dummy_labs.map((lab) => (
+      {/* {JSON.stringify(fetchedData)} */}
+      {fetchedData.map((lab) => (
         <LabCard key={lab.id} lab={lab} selectedUser={selectedUser} />
       ))}
     </div>
