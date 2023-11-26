@@ -1,33 +1,17 @@
-import React, { useState } from "react";
-import "./css/PostCard.css";
-
-// const PostCard = ({}) => {
-//   return (
-//     <div classNameName="feedCard">
-//       <h2 classNameName="title">{title}</h2>
-//       <p classNameName="content">{content}</p>
-//       <p classNameName="author">{author}</p>
-//       <div classNameName="buttons">
-//         <button onClick={handleLike}>좋아요</button>
-//         <button onClick={handleComment}>댓글</button>
-//         <button onClick={handleSubscribe}>구독</button>
-//       </div>
-//       <div classNameName="comments">
-//         {comments.map((comment, index) => (
-//           <p key={index}>{comment}</p>
-//         ))}
-//       </div>
-//       <div classNameName="commentInput">
-//         <input type="text" value={comment} onChange={handleCommentChange} />
-//         <button onClick={handleCommentSubmit}>등록</button>
-//       </div>
-//     </div>
-//   );
-// };
+import React, { useEffect, useState } from "react";
+import fetchData from "@/utils/fetchData";
 
 export default function PostCard({ post, selectedUser }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+
+  const [author, setAuthor] = useState(null);
+  const [likes, setLikes] = useState(null);
+
+  useEffect(() => {
+    fetchData(`/api/user/${post.author_id}`, setAuthor);
+    // fetchData(`/api/like/${post.id}`, setLikes);
+  });
 
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
@@ -61,7 +45,7 @@ export default function PostCard({ post, selectedUser }) {
           <h1 className="text-lg font-semibold">{post.title} </h1>
           <div className="flex items-center justify-between">
             <h2 className="text-lg text-gray-900 -mt-1">
-              {post.author_id /* author_id를 author_name으로 바꾸세요. */}
+              {author && author.user_name}
             </h2>
             <small className="text-sm text-gray-700">{post.createdAt}</small>
           </div>

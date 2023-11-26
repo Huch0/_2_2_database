@@ -7,3 +7,13 @@ export async function getAllUsers() {
 
   return users;
 }
+
+export async function getUserById(id) {
+  const user = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  return user;
+}
