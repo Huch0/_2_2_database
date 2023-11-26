@@ -10,9 +10,9 @@ import { NextResponse } from "next/server";
 import { getAllManager_requests } from "@/../db/api/manager_requests";
 
 export async function GET(Request) {
-  const manger_requests = await getAllManager_requests();
+  const manager_requests = await getAllManager_requests();
 
   //console.log(users);
 
-  return NextResponse.json(manger_requests);
+  return NextResponse.json(manager_requests);
 }

@@ -52,6 +52,9 @@ const init_manager_requests = (sequelize, Types) => {
       tableName: "Manager_requests",
       charset: "utf8mb4",
       collate: "utf8mb4_general_ci",
+      timestamps: true,
+      createdAt: true,
+      updatedAt: false,
       // table will use the UTF-8 character set, and case-insensitive comparisons will be used when querying data.
     }
   );
