@@ -79,7 +79,7 @@ const functionList = [
     contentType: "labManagerRequest",
     onClick: (setContentType, setFetchedData) => {
       setContentType("labManagerRequest");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData("/api/manager_requests", setFetchedData);
     },
   },
   {
