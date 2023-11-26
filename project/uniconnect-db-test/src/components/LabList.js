@@ -39,9 +39,10 @@ export default function LabList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
       {/* {JSON.stringify(fetchedData)} */}
-      {fetchedData.map((lab) => (
-        <LabCard key={lab.id} lab={lab} selectedUser={selectedUser} />
-      ))}
+      {fetchedData &&
+        fetchedData.map((lab) => (
+          <LabCard key={lab.id} lab={lab} selectedUser={selectedUser} />
+        ))}
     </div>
   );
 }

@@ -10,10 +10,13 @@ export default function PostCard({ post, selectedUser }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
+    if (!post.author_id) {
+      return;
+    }
     fetchData(`/api/user/${post.author_id}`, setAuthor);
     fetchData(`/api/like/${post.id}`, setLikes);
     fetchData(`/api/comment/${post.id}`, setComments);
-  }, []);
+  }, [post]);
 
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
