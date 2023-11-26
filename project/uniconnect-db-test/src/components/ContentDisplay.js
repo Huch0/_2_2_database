@@ -52,15 +52,15 @@ export default function ContentDisplay({
     <div>
       {JSON.stringify(fetchedData)}
 
-      <div >
-          <div className="mx-auto mt-10 max-w-2xl gap-x-8 border-t border-gray-200 pt-10">
-            {ContentComponent && (
-              <ContentComponent
-                data={fetchedData}
-                selectedUser={selectedUser}
-              />
-            )}
-          </div>
+      <div>
+        <div className="mx-auto mt-10 max-w-2xl gap-x-8 border-t border-gray-200 pt-10">
+          {ContentComponent && (
+            <ContentComponent
+              fetchedData={fetchedData}
+              selectedUser={selectedUser}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

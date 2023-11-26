@@ -9,7 +9,7 @@ const functionList = [
     contentType: "post",
     onClick: (setContentType, setFetchedData) => {
       setContentType("post");
-      // fetchData("/api/post", setFetchedData);
+      fetchData("/api/post", setFetchedData);
     },
   },
   {
