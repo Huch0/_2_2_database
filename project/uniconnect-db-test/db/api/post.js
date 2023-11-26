@@ -7,3 +7,14 @@ export async function getAllPosts() {
 
   return posts;
 }
+
+export async function getPostByAuthorId(id) {
+  const post = await Post.findAll({
+    where: {
+      author_id: id,
+    },
+    order: [["createdAt", "DESC"]],
+  });
+
+  return post;
+}
