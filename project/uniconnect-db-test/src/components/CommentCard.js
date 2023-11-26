@@ -52,9 +52,9 @@ export default function CommentCard({ comments, selectedUser }) {
         />
         <button
           onClick={handleNewCommentSubmit}
-          className="ml-2 bg-blue-500 text-white rounded-lg px-4 py-2"
+          className="ml-2 bg-blue-400 text-white rounded-lg px-4 py-2"
         >
-          Submit
+          작성
         </button>
       </div>
     </div>

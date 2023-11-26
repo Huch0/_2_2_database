@@ -6,6 +6,7 @@ import CommentCard from "@/components/CommentCard";
 export default function PostCard({ post, selectedUser }) {
   const [author, setAuthor] = useState(null);
   const [likes, setLikes] = useState(null);
+  const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
 
   const [showComments, setShowComments] = useState(false);
@@ -19,9 +20,13 @@ export default function PostCard({ post, selectedUser }) {
     fetchData(`/api/comment/${post.id}`, setComments);
   }, [post]);
 
-  const handleCommentButtonClick = () => {
-    setShowComments(!showComments);
-  };
+  useEffect(() => {
+    if (!likes) {
+      return;
+    }
+    const likedUserIds = likes.map((like) => like.user_id);
+    setLiked(likedUserIds.includes(selectedUser.id));
+  }, [likes, selectedUser]);
 
   const handleLike = () => {
     // 좋아요 로직을 구현하세요.
@@ -50,9 +55,13 @@ export default function PostCard({ post, selectedUser }) {
           <p className="mt-3 text-gray-700 text-sm h-48">{post.content}</p>
           <div className="mt-4 flex items-center">
             <div className="flex justify-end space-x-4 p-4">
-              <button className="flex mr-2 text-gray-700 text-sm mr-3">
+              {/* Like Button */}
+              <button
+                className="flex mr-2 text-red-500 text-sm mr-3"
+                onClick={() => setLiked(!liked)}
+              >
                 <svg
-                  fill="none"
+                  fill={liked ? "currentColor" : "none"}
                   viewBox="0 0 24 24"
                   className="w-4 h-4 mr-1"
                   stroke="currentColor"
@@ -68,11 +77,11 @@ export default function PostCard({ post, selectedUser }) {
               </button>
               {/* Comment Button */}
               <button
-                className="flex mr-2 text-gray-700 text-sm mr-8"
-                onClick={handleCommentButtonClick}
+                className="flex mr-2 text-blue-500 text-sm mr-8"
+                onClick={() => setShowComments(!showComments)}
               >
                 <svg
-                  fill="none"
+                  fill={showComments ? "currentColor" : "none"}
                   viewBox="0 0 24 24"
                   className="w-4 h-4 mr-1"
                   stroke="currentColor"
