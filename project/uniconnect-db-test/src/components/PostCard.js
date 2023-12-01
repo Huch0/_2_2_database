@@ -29,17 +29,26 @@ export default function PostCard({ post, selectedUser }) {
   }, [likes, selectedUser]);
 
   const handleLike = async () => {
-    const response = await fetchData(`/api/like/${post.id}`, setLikes, {
+    await fetchData(`/api/like/${post.id}`, setLikes, {
       method: liked ? "DELETE" : "POST",
       body: JSON.stringify({ user_id: `${selectedUser.id}`})
     });
   };
 
-  const handleDelete = () => {
-    // 삭제 로직을 구현하세요.
+  const handleDelete = async () => {
+    console.log(post.id);
+    await fetchData(`/api/post_delete_edit/${post.id}`, null, {
+      method: "DELETE",
+    });
   };
-  const handleEdit = () => {
-    // 수정 로직을 구현하세요.
+  
+  const handleEdit = async () => {
+    const title = prompt("수정할 제목을 입력하세요");
+    const content = prompt("수정할 내용을 입력하세요");
+    await fetchData(`/api/post_delete_edit/${post.id}`, null, {
+      method: "POST",
+      body: JSON.stringify({ title, content }),
+    });
   };
 
   return (

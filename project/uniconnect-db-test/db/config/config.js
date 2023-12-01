@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   development: {
     username: 'uniconnect_admin',
-    password: process.env.SEQUELIZE_PASSWORD,
+    password: "1324",
     database: 'uniconnect_dev',
     host: '127.0.0.1',
     dialect: 'postgres',

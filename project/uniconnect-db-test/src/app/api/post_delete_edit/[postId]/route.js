@@ -13,14 +13,15 @@ export async function POST(Request, { params }) {
     const postId = params.postId;
     const { title, content } = await Request.json();
 
-    await editPostByPostId(postId, title, content);
+    const updatedPost = await editPostByPostId(postId, title, content);
 
-    return NextResponse.redirect(`/main`);
+    return NextResponse.json(updatedPost);
 }
 
 export async function DELETE(Request, { params }) {
     const postId = params.postId;
     await deletePostByPostId(postId);
 
-    return NextResponse.redirect(`/main`);
+    return NextResponse.JSON({ message: 'Post deleted successfully' });
+
 }

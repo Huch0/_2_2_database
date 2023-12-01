@@ -7,12 +7,11 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import {createLikesByUserIdAndPostId, 
-        deleteLikesByUserIdAndPostId, getLikesByPostId } from "@/../db/api/like";
+import {createLikesByUserIdAndPostId, deleteLikesByUserIdAndPostId, getLikesByPostId } from "@/../db/api/like";
 
 export async function GET(Request, { params }) {
   const likes = await getLikesByPostId(params.postId);
-return NextResponse.json(likes);
+  return NextResponse.json(likes);
 }
 
 export async function POST(Request, { params }) {

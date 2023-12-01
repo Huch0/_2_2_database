@@ -49,7 +49,7 @@ const functionList = [
     contentType: "postEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData(`/api/post/${selectedUser.id}`, setFetchedData);
     },
   },
   {
