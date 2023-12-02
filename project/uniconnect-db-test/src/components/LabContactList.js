@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import fetchData from "@/utils/fetchData";
 
-function ContactCard({ contact }) {
+function ContactCard({ contact, selectedUser }) {
   const handleConfirm = () => {};
   const handleCancel = () => {};
 
@@ -33,14 +33,22 @@ function ContactCard({ contact }) {
 
   useEffect(() => {
     if (!contact.student_id) return;
-    fetchData(`/api/user/${contact.student_id}`, setStudent);
-    fetchData(`/api/profile/${contact.student_id}`, setStudentProfile);
+    fetchData(`/api/user/${contact.student_id}`, setStudent, {
+      selectedRole: selectedUser.role,
+    });
+    fetchData(`/api/profile/${contact.student_id}`, setStudentProfile, {
+      selectedRole: selectedUser.role,
+    });
   }, [contact]);
 
   useEffect(() => {
     if (studentProfile) {
-      fetchData(`/api/school/${studentProfile.school_id}`, setSchool);
-      fetchData(`/api/major/${studentProfile.major_id}`, setMajor);
+      fetchData(`/api/school/${studentProfile.school_id}`, setSchool, {
+        selectedRole: selectedUser.role,
+      });
+      fetchData(`/api/major/${studentProfile.major_id}`, setMajor, {
+        selectedRole: selectedUser.role,
+      });
     }
   }, [studentProfile]);
 
@@ -91,7 +99,11 @@ export default function LabContactList({ fetchedData, selectedUser }) {
     <div className="flex flex-col">
       {fetchedData &&
         fetchedData.map((contact) => (
-          <ContactCard key={contact.student_id} contact={contact} />
+          <ContactCard
+            key={contact.student_id}
+            contact={contact}
+            selectedUser={selectedUser}
+          />
         ))}
     </div>
   );
