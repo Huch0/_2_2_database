@@ -14,3 +14,12 @@ export async function GET(Request, { params }) {
 
   return NextResponse.json(users);
 }
+
+export async function POST(Request, { params }) {
+  const userId = params.id;
+  const { degree } = await Request.json();
+
+  const updatedUser = await editUserById(userId, degree);
+
+  return NextResponse.json(updatedUser);
+}

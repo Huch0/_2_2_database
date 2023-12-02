@@ -7,7 +7,7 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import { getProfileByUserId } from "@/../db/api/profile";
+import { editDegreeByUserId, getProfileByUserId } from "@/../db/api/profile";
 
 export async function GET(Request, { params }) {
   const profile = await getProfileByUserId(params.userId);
@@ -15,4 +15,13 @@ export async function GET(Request, { params }) {
   //console.log(users);
 
   return NextResponse.json(profile);
+}
+
+export async function POST(Request, { params }) {
+  const userId = params.id;
+  const { degree } = await Request.json();
+
+  const updatedUser = await editDegreeByUserId(userId, degree);
+
+  return NextResponse.json(updatedUser);
 }
