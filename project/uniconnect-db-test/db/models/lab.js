@@ -56,4 +56,20 @@ const init_labs = (sequelize, Types) => {
   return Lab;
 };
 
-export default init_labs(connection, DataTypes);
+const adminLab = init_labs(connection.adminSequelize, DataTypes);
+const readerLab = init_labs(connection.readerSequelize, DataTypes);
+const studentLab = init_labs(connection.studentSequelize, DataTypes);
+const researcherLab = init_labs(connection.researcherSequelize, DataTypes);
+const labManagerLab = init_labs(connection.labManagerSequelize, DataTypes);
+const bannedLab = init_labs(connection.bannedSequelize, DataTypes);
+
+const Labs = {
+  adminLab,
+  readerLab,
+  studentLab,
+  researcherLab,
+  labManagerLab,
+  bannedLab,
+};
+
+export default Labs;

@@ -63,4 +63,26 @@ const init_comments = (sequelize, Types) => {
   return Comment;
 };
 
-export default init_comments(connection, DataTypes);
+const adminComment = init_comments(connection.adminSequelize, DataTypes);
+const readerComment = init_comments(connection.readerSequelize, DataTypes);
+const studentComment = init_comments(connection.studentSequelize, DataTypes);
+const researcherComment = init_comments(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerComment = init_comments(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedComment = init_comments(connection.bannedSequelize, DataTypes);
+
+const Comments = {
+  adminComment,
+  readerComment,
+  studentComment,
+  researcherComment,
+  labManagerComment,
+  bannedComment,
+};
+
+export default Comments;

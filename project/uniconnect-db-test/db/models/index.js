@@ -1,25 +1,25 @@
-import User from "./user.js";
-import Post from "./post.js";
-import Comment from "./comment.js";
-import Contact from "./contact.js";
-import Like from "./like.js";
-import Lab from "./lab.js";
-import School from "./school.js";
-import Major from "./major.js";
-import Profile from "./profile.js";
-import Subscription from "./subscription.js";
-import Manager_request from "./manager_request.js";
+import Users from "./user.js";
+import Posts from "./post.js";
+import Comments from "./comment.js";
+import Contacts from "./contact.js";
+import Likes from "./like.js";
+import Labs from "./lab.js";
+import Schools from "./school.js";
+import Majors from "./major.js";
+import Profiles from "./profile.js";
+import Subscriptions from "./subscription.js";
+import Manager_requests from "./manager_request.js";
 
 export {
-  User,
-  Post,
-  Comment,
-  Contact,
-  Like,
-  Lab,
-  School,
-  Major,
-  Profile,
-  Subscription,
-  Manager_request,
+  Users,
+  Posts,
+  Comments,
+  Contacts,
+  Likes,
+  Labs,
+  Schools,
+  Majors,
+  Profiles,
+  Subscriptions,
+  Manager_requests,
 };

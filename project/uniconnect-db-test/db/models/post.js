@@ -58,4 +58,20 @@ const init_posts = (sequelize, Types) => {
   return Post;
 };
 
-export default init_posts(connection, DataTypes);
+const adminPost = init_posts(connection.adminSequelize, DataTypes);
+const readerPost = init_posts(connection.readerSequelize, DataTypes);
+const studentPost = init_posts(connection.studentSequelize, DataTypes);
+const researcherPost = init_posts(connection.researcherSequelize, DataTypes);
+const labManagerPost = init_posts(connection.labManagerSequelize, DataTypes);
+const bannedPost = init_posts(connection.bannedSequelize, DataTypes);
+
+const Posts = {
+  adminPost,
+  readerPost,
+  studentPost,
+  researcherPost,
+  labManagerPost,
+  bannedPost,
+};
+
+export default Posts;
