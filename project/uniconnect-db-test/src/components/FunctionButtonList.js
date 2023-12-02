@@ -33,7 +33,9 @@ const functionList = [
     contentType: "majorEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("majorEditor");
-      fetchData(`/api/major/${selectedUser.id}`, setFetchedData);
+      fetchData(`/api/major/${selectedUser.id}`, setFetchedData, {
+        selectedRole: selectedUser.role,
+      });
     },
   },
   {

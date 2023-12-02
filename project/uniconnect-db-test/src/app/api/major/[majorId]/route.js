@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getMajorById } from "@/../db/api/major";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const major = await getMajorById(params.majorId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const major = await getMajorById(selectedRole, params.majorId);
 
   //console.log(users);
 

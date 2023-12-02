@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function MajorEditor() {
+export default function MajorEditor(selectedUser) {
   const [major, setMajor] = useState("");
 
   const handleConfirm = () => {
