@@ -71,6 +71,7 @@ module.exports = {
           school_id: 1, // 부산대학교
           major_id: 1, // 정보컴퓨터공학부
           lab_id: 2, // 연결 지능 시스템 연구실
+          degree: "doctoral",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
