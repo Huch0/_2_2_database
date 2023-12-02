@@ -3,11 +3,36 @@ import fetchData from "@/utils/fetchData";
 
 function LabCard({ lab, selectedUser }) {
   const [school, setSchool] = useState(null);
+  const [contact, setContact] = useState(null);
+  const [contactStatus, setContactStatus] = useState(null);
+
+  const handleContactRequest = () => {
+    // 연구실 컨택 요청
+    console.log("연구실 컨택 요청");
+  };
 
   useEffect(() => {
     if (!lab.school_id) return;
     fetchData(`/api/school/${lab.school_id}`, setSchool);
   }, [lab]);
+
+  useEffect(() => {
+    fetchData(`/api/contact/studentId/${selectedUser.id}`, setContact);
+  }, [lab, selectedUser]);
+
+  useEffect(() => {
+    if (contact && contact[0] && contact[0].lab_id === lab.id) {
+      if (contact[0].status === "accepted") {
+        setContactStatus("수락됨");
+      } else if (contact[0].status === "rejected") {
+        setContactStatus("거절됨");
+      } else if (contact[0].status === "pending") {
+        setContactStatus("수락 대기중");
+      }
+    } else {
+      setContactStatus("컨택 요청");
+    }
+  }, [contact]);
 
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
@@ -26,11 +51,24 @@ function LabCard({ lab, selectedUser }) {
         </div>
       </div>
       <div className="flex justify-end space-x-4 p-4">
-        <button className="bg-white text-blue-500 border hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded">
-          구독
-        </button>
-        <button className="bg-white text-blue-500 border hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded">
-          컨택
+        <button
+          disabled={
+            contactStatus === "수락됨" ||
+            contactStatus === "거절됨" ||
+            contactStatus === "수락 대기중"
+          }
+          className={`font-bold py-2 px-4 rounded ${
+            contactStatus === "수락됨"
+              ? "bg-blue-400 text-white  border hover:bg-blue-500 hover:text-white"
+              : contactStatus === "거절됨"
+              ? "bg-red-500 text-white border hover:bg-white hover:text-red-500"
+              : contactStatus === "수락 대기중"
+              ? "bg-green-500 text-white border hover:bg-white hover:text-green-500"
+              : "bg-white text-blue-500 border hover:bg-blue-500 hover:text-white"
+          }`}
+          onClick={handleContactRequest}
+        >
+          {contactStatus}
         </button>
         {
           // research이고 lab의 manager가 아니면 보임.
