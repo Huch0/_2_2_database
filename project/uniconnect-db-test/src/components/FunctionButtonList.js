@@ -33,9 +33,11 @@ const functionList = [
     contentType: "majorEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("majorEditor");
-      fetchData(`/api/major/${selectedUser.id}`, setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/major/${selectedUser.id}`,
+        setFetchedData,
+        selectedUser.role
+      );
     },
   },
   {
@@ -94,7 +96,7 @@ const functionList = [
     contentType: "labManagerRequest",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labManagerRequest");
-      fetchData("/api/manager_requests", setFetchedData);
+      fetchData("/api/manager_requests", setFetchedData, selectedUser.role);
     },
   },
   {
