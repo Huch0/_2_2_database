@@ -45,8 +45,7 @@ function selectUser(selectedRole) {
       User = Users.bannedUser;
       break;
     default:
-      User = Users.adminUser;
-      break;
+      throw new Error("Invalid role");
   }
 
   return User;

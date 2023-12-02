@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getAllUsers } from "@/../db/api/user";
+import { parse } from "url";
 
 export async function GET(Request) {
-  const users = await getAllUsers("admin");
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const users = await getAllUsers(selectedRole, "admin");
 
   //console.log(users);
 

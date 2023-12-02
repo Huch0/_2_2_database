@@ -106,7 +106,7 @@ const functionList = [
     contentType: "user",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("user");
-      fetchData("/api/user", setFetchedData);
+      fetchData("/api/user", setFetchedData, selectedUser.role);
     },
   },
 ];
