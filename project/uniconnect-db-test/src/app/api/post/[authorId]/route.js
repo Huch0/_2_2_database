@@ -8,33 +8,46 @@
 
 import { NextResponse } from "next/server";
 import { addPostByAuthorId, getPostByAuthorId } from "@/../db/api/post";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const authorId = params.authorId;
-  const posts = await getPostByAuthorId(authorId);
+  const posts = await getPostByAuthorId(selectedRole, authorId);
 
   return NextResponse.json(posts);
 }
 
 export async function POST(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const authorId = params.authorId;
   const { title, content } = await Request.json();
-  await addPostByAuthorId(authorId, title, content);
+  await addPostByAuthorId(selectedRole, authorId, title, content);
 
   return GET(Request, { params });
 }
 
 export async function DELETE(Request, { params }) {
-  const {postId} = await Request.json();
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const { postId } = await Request.json();
   console.log(postId);
-  await deletePostByPostId(postId);
+  await deletePostByPostId(selectedRole, postId);
 
   return GET(Request, { params });
 }
 
 export async function PUT(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const { postId, title, content } = await Request.json();
-  await editPostByPostId(postId, title, content);
+  await editPostByPostId(selectedRole, postId, title, content);
 
   return GET(Request, { params });
 }

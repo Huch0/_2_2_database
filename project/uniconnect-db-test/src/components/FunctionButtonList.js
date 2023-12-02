@@ -57,7 +57,9 @@ const functionList = [
     contentType: "postEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
-      fetchData(`/api/post/${selectedUser.id}`, setFetchedData);
+      fetchData(`/api/post/${selectedUser.id}`, setFetchedData, {
+        selectedRole: selectedUser.role,
+      });
     },
   },
   {
