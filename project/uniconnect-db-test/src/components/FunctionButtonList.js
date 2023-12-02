@@ -9,9 +9,7 @@ const functionList = [
     contentType: "post",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
-      fetchData("/api/post", setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData("/api/post", setFetchedData, selectedUser.role);
     },
   },
   {
@@ -21,9 +19,7 @@ const functionList = [
     contentType: "lab",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("lab");
-      fetchData("/api/lab", setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData("/api/lab", setFetchedData, selectedUser.role);
     },
   },
   {
@@ -47,9 +43,11 @@ const functionList = [
     contentType: "degreeEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("degreeEditor");
-      fetchData(`/api/profile/${selectedUser.id}`, setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/profile/${selectedUser.id}`,
+        setFetchedData,
+        selectedUser.role
+      );
     },
   },
   {
@@ -59,9 +57,11 @@ const functionList = [
     contentType: "postEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
-      fetchData(`/api/post/${selectedUser.id}`, setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/post/${selectedUser.id}`,
+        setFetchedData,
+        selectedUser.role
+      );
     },
   },
   {
@@ -71,9 +71,11 @@ const functionList = [
     contentType: "post",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
-      fetchData(`/api/post/${selectedUser.id}`, setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/post/${selectedUser.id}`,
+        setFetchedData,
+        selectedUser.role
+      );
     },
   },
   {
@@ -84,9 +86,11 @@ const functionList = [
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labContact");
       // selectedUser 가 lab_manager 일 때만 작동
-      fetchData(`/api/contact/${selectedUser.id}`, setFetchedData, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/contact/${selectedUser.id}`,
+        setFetchedData,
+        selectedUser.role
+      );
     },
   },
   {

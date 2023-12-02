@@ -14,7 +14,7 @@ export async function GET(Request) {
   const { query } = parse(Request.url, true);
   const selectedRole = query.selectedRole;
 
-  const users = await getAllUsers(selectedRole, "admin");
+  const users = await getAllUsers(selectedRole);
 
   //console.log(users);
 

@@ -33,22 +33,26 @@ function ContactCard({ contact, selectedUser }) {
 
   useEffect(() => {
     if (!contact.student_id) return;
-    fetchData(`/api/user/${contact.student_id}`, setStudent, {
-      selectedRole: selectedUser.role,
-    });
-    fetchData(`/api/profile/${contact.student_id}`, setStudentProfile, {
-      selectedRole: selectedUser.role,
-    });
+    fetchData(`/api/user/${contact.student_id}`, setStudent, selectedUser.role);
+    fetchData(
+      `/api/profile/${contact.student_id}`,
+      setStudentProfile,
+      selectedUser.role
+    );
   }, [contact]);
 
   useEffect(() => {
     if (studentProfile) {
-      fetchData(`/api/school/${studentProfile.school_id}`, setSchool, {
-        selectedRole: selectedUser.role,
-      });
-      fetchData(`/api/major/${studentProfile.major_id}`, setMajor, {
-        selectedRole: selectedUser.role,
-      });
+      fetchData(
+        `/api/school/${studentProfile.school_id}`,
+        setSchool,
+        selectedUser.role
+      );
+      fetchData(
+        `/api/major/${studentProfile.major_id}`,
+        setMajor,
+        selectedUser.role
+      );
     }
   }, [studentProfile]);
 
@@ -98,9 +102,9 @@ export default function LabContactList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
-        fetchedData.map((contact) => (
+        fetchedData.map((contact, index) => (
           <ContactCard
-            key={contact.student_id}
+            key={index}
             contact={contact}
             selectedUser={selectedUser}
           />

@@ -49,8 +49,7 @@ function selectContact(selectedRole) {
       Contact = Contacts.bannedContact;
       break;
     default:
-      Contact = Contacts.adminContact;
-      break;
+      throw new Error("Invalid role");
   }
 
   return Contact;

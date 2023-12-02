@@ -15,15 +15,9 @@ export default function PostCard({ post, selectedUser }) {
     if (!post.author_id) {
       return;
     }
-    fetchData(`/api/user/${post.author_id}`, setAuthor, {
-      selectedRole: selectedUser.role,
-    });
-    fetchData(`/api/like/${post.id}`, setLikes, {
-      selectedRole: selectedUser.role,
-    });
-    fetchData(`/api/comment/${post.id}`, setComments, {
-      selectedRole: selectedUser.role,
-    });
+    fetchData(`/api/user/${post.author_id}`, setAuthor, selectedUser.role);
+    fetchData(`/api/like/${post.id}`, setLikes, selectedUser.role);
+    fetchData(`/api/comment/${post.id}`, setComments, selectedUser.role);
   }, [post]);
 
   useEffect(() => {
@@ -35,17 +29,10 @@ export default function PostCard({ post, selectedUser }) {
   }, [likes, selectedUser]);
 
   const handleLike = async () => {
-    await fetchData(
-      `/api/like/${post.id}`,
-      setLikes,
-      {
-        selectedRole: selectedUser.role,
-      },
-      {
-        method: liked ? "DELETE" : "POST",
-        body: JSON.stringify({ user_id: `${selectedUser.id}` }),
-      }
-    );
+    await fetchData(`/api/like/${post.id}`, setLikes, selectedUser.role, {
+      method: liked ? "DELETE" : "POST",
+      body: JSON.stringify({ user_id: `${selectedUser.id}` }),
+    });
   };
 
   const handleDelete = async () => {
@@ -53,9 +40,7 @@ export default function PostCard({ post, selectedUser }) {
     await fetchData(
       `/api/post_delete_edit/${post.id}`,
       null,
-      {
-        selectedRole: selectedUser.role,
-      },
+      selectedUser.role,
       {
         method: "DELETE",
       }
@@ -68,9 +53,7 @@ export default function PostCard({ post, selectedUser }) {
     await fetchData(
       `/api/post_delete_edit/${post.id}`,
       null,
-      {
-        selectedRole: selectedUser.role,
-      },
+      selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({ title, content }),

@@ -50,8 +50,7 @@ function selectProfile(selectedRole) {
       Profile = Profiles.bannedProfile;
       break;
     default:
-      Profile = Profiles.adminProfile;
-      break;
+      throw new Error("Invalid role");
   }
 
   return Profile;

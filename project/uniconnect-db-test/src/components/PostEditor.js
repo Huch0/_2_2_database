@@ -1,6 +1,5 @@
 import fetchData from "@/utils/fetchData";
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 
 export default function PostEditor({ selectedUser }) {
   const [title, setTitle] = useState("");
@@ -10,9 +9,7 @@ export default function PostEditor({ selectedUser }) {
     const response = await fetchData(
       `/api/post/${selectedUser.id}`,
       null,
-      {
-        selectedRole: selectedUser.role,
-      },
+      selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({ title, content }),

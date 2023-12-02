@@ -35,8 +35,7 @@ function selectSchool(selectedRole) {
       School = Schools.bannedSchool;
       break;
     default:
-      School = Schools.adminSchool;
-      break;
+      throw new Error("Invalid role");
   }
 
   return School;

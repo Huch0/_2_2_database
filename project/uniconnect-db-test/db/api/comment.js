@@ -36,8 +36,7 @@ function selectComment(selectedRole) {
       Comment = Comments.bannedComment;
       break;
     default:
-      Comment = Comments.adminComment;
-      break;
+      throw new Error("Invalid role");
   }
 
   return Comment;

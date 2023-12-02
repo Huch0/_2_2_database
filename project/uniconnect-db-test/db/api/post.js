@@ -57,7 +57,7 @@ function selectPost(selectedRole) {
       Post = Posts.bannedPost;
       break;
     default:
-      Post = Posts.adminPost;
+      throw new Error("Invalid role");
   }
   return Post;
 }

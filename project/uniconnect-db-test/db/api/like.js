@@ -67,8 +67,7 @@ function selectLike(selectedRole) {
       Like = Likes.bannedLike;
       break;
     default:
-      Like = Likes.adminLike;
-      break;
+      throw new Error("Invalid role");
   }
 
   return Like;

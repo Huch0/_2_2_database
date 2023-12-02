@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import fetchData from "@/utils/fetchData";
 
-function RequestCard({ request }) {
+function RequestCard({ request, selectedUser }) {
   const handleConfirm = () => {};
   const handleCancel = () => {};
 
@@ -11,8 +11,8 @@ function RequestCard({ request }) {
   useEffect(() => {
     // console.log(request, user, lab);
     if (!request || !request.user_id || !request.lab_id) return;
-    fetchData(`/api/user/${request.user_id}`, setUser);
-    fetchData(`/api/lab/${request.lab_id}`, setLab);
+    fetchData(`/api/user/${request.user_id}`, setUser, selectedUser.role);
+    fetchData(`/api/lab/${request.lab_id}`, setLab, selectedUser.role);
   }, [request]);
 
   return (
@@ -50,7 +50,11 @@ export default function ManagerRequestList({ fetchedData, selectedUser }) {
     <div className="flex flex-col">
       {fetchedData &&
         fetchedData.map((request) => (
-          <RequestCard key={request.id} request={request} />
+          <RequestCard
+            key={request.id}
+            request={request}
+            selectedUser={selectedUser}
+          />
         ))}
     </div>
   );

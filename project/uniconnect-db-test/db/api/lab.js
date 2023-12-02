@@ -57,7 +57,7 @@ function selectLab(selectedRole) {
       Lab = Labs.bannedLab;
       break;
     default:
-      Lab = Labs.adminLab;
+      throw new Error("Invalid role");
   }
 
   return Lab;

@@ -14,9 +14,8 @@ export default function DegreeEditor({ profile, selectedUser }) {
   const handleConfirm = async () => {
     const updatedDegree = await fetchData(
       `/api/profile/${selectedUser.id}`,
-      {
-        selectedRole: selectedUser.role,
-      },
+      setDegree,
+      selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({ degree }),

@@ -13,15 +13,15 @@ function LabCard({ lab, selectedUser }) {
 
   useEffect(() => {
     if (!lab.school_id) return;
-    fetchData(`/api/school/${lab.school_id}`, setSchool, {
-      selectedRole: selectedUser.role,
-    });
+    fetchData(`/api/school/${lab.school_id}`, setSchool, selectedUser.role);
   }, [lab]);
 
   useEffect(() => {
-    fetchData(`/api/contact/studentId/${selectedUser.id}`, setContact, {
-      selectedRole: selectedUser.role,
-    });
+    fetchData(
+      `/api/contact/studentId/${selectedUser.id}`,
+      setContact,
+      selectedUser.role
+    );
   }, [lab, selectedUser]);
 
   useEffect(() => {

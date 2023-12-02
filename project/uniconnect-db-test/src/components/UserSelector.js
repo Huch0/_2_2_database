@@ -3,7 +3,7 @@ import fetchData from "@/utils/fetchData";
 
 export default function UserSelector({ users, setUsers, setSelectedUser }) {
   useEffect(() => {
-    fetchData("/api/user", setUsers);
+    fetchData("/api/user", setUsers, "admin");
   }, []);
 
   return (

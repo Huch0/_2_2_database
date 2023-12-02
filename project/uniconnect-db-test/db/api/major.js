@@ -35,8 +35,7 @@ function selectMajor(selectedRole) {
       Major = Majors.bannedMajor;
       break;
     default:
-      Major = Majors.adminMajor;
-      break;
+      throw new Error("Invalid role");
   }
 
   return Major;
