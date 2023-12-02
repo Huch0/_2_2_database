@@ -9,8 +9,9 @@ const functionList = [
     contentType: "post",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
-      const selectedRole = selectedUser.role;
-      fetchData("/api/post", setFetchedData, selectedRole);
+      fetchData("/api/post", setFetchedData, {
+        selectedRole: selectedUser.role,
+      });
     },
   },
   {
@@ -20,7 +21,9 @@ const functionList = [
     contentType: "lab",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("lab");
-      fetchData("/api/lab", setFetchedData);
+      fetchData("/api/lab", setFetchedData, {
+        selectedRole: selectedUser.role,
+      });
     },
   },
   {

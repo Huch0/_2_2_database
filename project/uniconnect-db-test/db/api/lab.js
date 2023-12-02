@@ -1,6 +1,8 @@
-import { Lab } from "../models/index.js";
+import { Labs } from "../models/index.js";
 
-export async function getAllLabs() {
+export async function getAllLabs(selectedRole) {
+  const Lab = selectLab(selectedRole);
+
   const labs = await Lab.findAll({
     order: [["createdAt", "DESC"]],
   });
@@ -8,7 +10,9 @@ export async function getAllLabs() {
   return labs;
 }
 
-export async function getLabByManagerId(id) {
+export async function getLabByManagerId(selectedRole, id) {
+  const Lab = selectLab(selectedRole);
+
   const lab = await Lab.findOne({
     where: {
       manager_id: id,
@@ -18,7 +22,9 @@ export async function getLabByManagerId(id) {
   return lab;
 }
 
-export async function getLabById(id) {
+export async function getLabById(selectedRole, id) {
+  const Lab = selectLab(selectedRole);
+
   const lab = await Lab.findOne({
     where: {
       id,
@@ -26,4 +32,33 @@ export async function getLabById(id) {
   });
 
   return lab;
+}
+
+function selectLab(selectedRole) {
+  let Lab = null;
+
+  switch (selectedRole) {
+    case "admin":
+      Lab = Labs.adminLab;
+      break;
+    case "reader":
+      Lab = Labs.readerLab;
+      break;
+    case "student":
+      Lab = Labs.studentLab;
+      break;
+    case "researcher":
+      Lab = Labs.researcherLab;
+      break;
+    case "lab_manager":
+      Lab = Labs.labManagerLab;
+      break;
+    case "banned":
+      Lab = Labs.bannedLab;
+      break;
+    default:
+      Lab = Labs.adminLab;
+  }
+
+  return Lab;
 }

@@ -75,7 +75,7 @@ const init_contacts = (sequelize, Types) => {
 };
 
 const adminContact = init_contacts(connection.adminSequelize, DataTypes);
-const readContact = init_contacts(connection.readerSequelize, DataTypes);
+const readerContact = init_contacts(connection.readerSequelize, DataTypes);
 const studentContact = init_contacts(connection.studentSequelize, DataTypes);
 const researcherContact = init_contacts(
   connection.researcherSequelize,
@@ -89,7 +89,7 @@ const bannedContact = init_contacts(connection.bannedSequelize, DataTypes);
 
 const Contacts = {
   adminContact,
-  readContact,
+  readerContact,
   studentContact,
   researcherContact,
   labManagerContact,
