@@ -9,7 +9,7 @@ const functionList = [
     contentType: "post",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("post");
-      fetchData("/api/post", setFetchedData, selectedUser.role);
+      fetchData("/api/post", setFetchedData, selectedUser.role, {}, "post");
     },
   },
   {
@@ -19,7 +19,7 @@ const functionList = [
     contentType: "lab",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("lab");
-      fetchData("/api/lab", setFetchedData, selectedUser.role);
+      fetchData("/api/lab", setFetchedData, selectedUser.role, {}, "lab");
     },
   },
   {
@@ -30,9 +30,11 @@ const functionList = [
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("majorEditor");
       fetchData(
-        `/api/major/${selectedUser.id}`,
+        `/api/profile/${selectedUser.id}`,
         setFetchedData,
-        selectedUser.role
+        selectedUser.role,
+        {},
+        "majorEditor"
       );
     },
   },
@@ -46,7 +48,9 @@ const functionList = [
       fetchData(
         `/api/profile/${selectedUser.id}`,
         setFetchedData,
-        selectedUser.role
+        selectedUser.role,
+        {},
+        "degreeEditor"
       );
     },
   },
@@ -57,11 +61,13 @@ const functionList = [
     contentType: "postEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
-      fetchData(
-        `/api/post/${selectedUser.id}`,
-        setFetchedData,
-        selectedUser.role
-      );
+      // fetchData(
+      //   `/api/post/${selectedUser.id}`,
+      //   setFetchedData,
+      //   selectedUser.role,
+      //   {},
+      //   "postEditor"
+      // );
     },
   },
   {
@@ -74,7 +80,9 @@ const functionList = [
       fetchData(
         `/api/post/${selectedUser.id}`,
         setFetchedData,
-        selectedUser.role
+        selectedUser.role,
+        {},
+        "post"
       );
     },
   },
@@ -89,7 +97,9 @@ const functionList = [
       fetchData(
         `/api/contact/${selectedUser.id}`,
         setFetchedData,
-        selectedUser.role
+        selectedUser.role,
+        {},
+        "labContact"
       );
     },
   },
@@ -100,7 +110,13 @@ const functionList = [
     contentType: "labManagerRequest",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("labManagerRequest");
-      fetchData("/api/manager_requests", setFetchedData, selectedUser.role);
+      fetchData(
+        "/api/manager_requests",
+        setFetchedData,
+        selectedUser.role,
+        {},
+        "labManagerRequest"
+      );
     },
   },
   {
@@ -110,7 +126,7 @@ const functionList = [
     contentType: "user",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("user");
-      fetchData("/api/user", setFetchedData, selectedUser.role);
+      fetchData("/api/user", setFetchedData, selectedUser.role, {}, "user");
     },
   },
 ];

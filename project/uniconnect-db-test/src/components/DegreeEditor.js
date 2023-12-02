@@ -1,15 +1,8 @@
 import fetchData from "@/utils/fetchData";
 import React, { useEffect, useState } from "react";
 
-export default function DegreeEditor({ profile, selectedUser }) {
+export default function DegreeEditor({ fetchedData, selectedUser }) {
   const [degree, setDegree] = useState("");
-
-  useEffect(() => {
-    if (!profile) {
-      return;
-    }
-    setDegree(profile.degree);
-  }, [profile]);
 
   const handleConfirm = async () => {
     const updatedDegree = await fetchData(
@@ -27,6 +20,20 @@ export default function DegreeEditor({ profile, selectedUser }) {
 
   return (
     <div className="flex flex-col">
+      {fetchedData && fetchedData.dataType === "degreeEditor" && (
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <div className="flex flex-col">
+              <span className="font-bold">
+                현재 학위 과정 :{" "}
+                {fetchedData.data.degree === null
+                  ? "없음"
+                  : fetchedData.data.degree}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
       <select
         value={degree}
         onChange={(e) => setDegree(e.target.value)}

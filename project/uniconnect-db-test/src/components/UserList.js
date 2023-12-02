@@ -1,8 +1,17 @@
 function UserCard({ user }) {
   const handleBan = () => {};
+  let cardColor = "bg-white";
+  let statusMessage = "밴";
+
+  if (user && user.role === "banned") {
+    cardColor = "bg-red-200";
+    statusMessage = "정지 된 사용자";
+  }
 
   return (
-    <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
+    <div
+      className={`flex ${cardColor} shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between`}
+    >
       <div className="flex items-start px-4 py-6">
         <div className="">
           <h1 className="text-lg font-semibold">{user.user_name}</h1>
@@ -15,8 +24,9 @@ function UserCard({ user }) {
         <button
           onClick={handleBan}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          disabled={user.role === "banned"}
         >
-          밴
+          {statusMessage}
         </button>
       </div>
     </div>
@@ -27,7 +37,8 @@ export default function UserList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
-        fetchedData.map((user) => <UserCard key={user.id} user={user} />)}
+        fetchedData.dataType === "user" &&
+        fetchedData.data.map((user) => <UserCard key={user.id} user={user} />)}
     </div>
   );
 }

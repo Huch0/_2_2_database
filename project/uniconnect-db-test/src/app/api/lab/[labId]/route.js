@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getLabById } from "@/../db/api/lab";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const lab = await getLabById(params.labId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const lab = await getLabById(selectedRole, params.labId);
 
   //console.log(users);
 

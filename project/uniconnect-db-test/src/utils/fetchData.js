@@ -4,7 +4,8 @@ export default async function fetchData(
   endpoint,
   setState,
   selectedRole,
-  options = {}
+  options = {},
+  dataType = ""
 ) {
   // console.log("kk", selectedRole);
   try {
@@ -13,7 +14,14 @@ export default async function fetchData(
       method: options.method || "GET",
       data: options.body,
     });
-    setState(response.data);
+    if (dataType !== "") {
+      setState({
+        dataType: dataType,
+        data: response.data,
+      });
+    } else {
+      setState(response.data);
+    }
   } catch (error) {
     console.error("Error fetching data", error);
   }

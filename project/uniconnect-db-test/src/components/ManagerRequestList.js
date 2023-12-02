@@ -49,7 +49,8 @@ export default function ManagerRequestList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
-        fetchedData.map((request) => (
+        fetchedData.dataType === "labManagerRequest" &&
+        fetchedData.data.map((request) => (
           <RequestCard
             key={request.id}
             request={request}

@@ -1,7 +1,7 @@
 import fetchData from "@/utils/fetchData";
 import React, { useState } from "react";
 
-export default function PostEditor({ selectedUser }) {
+export default function PostEditor({ fetchedData, selectedUser }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 

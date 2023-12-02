@@ -32,7 +32,6 @@ function ContactCard({ contact, selectedUser }) {
   const [major, setMajor] = useState(null);
 
   useEffect(() => {
-    if (!contact.student_id) return;
     fetchData(`/api/user/${contact.student_id}`, setStudent, selectedUser.role);
     fetchData(
       `/api/profile/${contact.student_id}`,
@@ -102,7 +101,8 @@ export default function LabContactList({ fetchedData, selectedUser }) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
-        fetchedData.map((contact, index) => (
+        fetchedData.dataType === "labContact" &&
+        fetchedData.data.map((contact, index) => (
           <ContactCard
             key={index}
             contact={contact}
