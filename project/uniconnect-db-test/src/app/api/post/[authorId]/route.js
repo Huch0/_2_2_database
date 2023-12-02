@@ -36,7 +36,7 @@ export async function DELETE(Request, { params }) {
   const selectedRole = query.selectedRole;
 
   const { postId } = await Request.json();
-  console.log(postId);
+  // console.log(postId);
   await deletePostByPostId(selectedRole, postId);
 
   return GET(Request, { params });
