@@ -18,3 +18,13 @@ export async function getPostByAuthorId(id) {
 
   return post;
 }
+
+export async function addPostByAuthorId(id, title, content) {
+  const post = await Post.create({
+    author_id: id,
+    title: title,
+    content: content,    
+  });
+
+  return post;
+}

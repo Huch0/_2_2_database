@@ -9,3 +9,16 @@ export async function getProfileByUserId(id) {
 
   return profile;
 }
+
+export async function editDegreeByUserId(id, degree) {
+  const profile = await Profile.update(
+    { degree: degree },
+    {
+      where: {
+        user_id: id,
+      },
+    }
+  );
+
+  return profile;
+}

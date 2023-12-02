@@ -10,3 +10,22 @@ export async function getLikesByPostId(id) {
 
   return likes;
 }
+
+export async function createLikesByUserIdAndPostId(user_id, post_id) {
+  await Like.create({
+    user_id : user_id,
+    post_id : post_id,
+  });
+  return;
+}
+
+export async function deleteLikesByUserIdAndPostId(user_id, post_id) {
+  await Like.destroy({
+    where: {
+      user_id: user_id,
+      post_id: post_id,
+    }
+  });
+
+  return;
+}

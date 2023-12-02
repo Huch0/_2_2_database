@@ -29,7 +29,7 @@ const functionList = [
     contentType: "majorEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("majorEditor");
-      // fetchData("/api/major", setFetchedData);
+      fetchData(`/api/major/${selectedUser.id}`, setFetchedData);
     },
   },
   {
@@ -39,7 +39,7 @@ const functionList = [
     contentType: "degreeEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("degreeEditor");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData(`/api/profile/${selectedUser.id}`, setFetchedData);
     },
   },
   {
@@ -49,7 +49,7 @@ const functionList = [
     contentType: "postEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("postEditor");
-      // fetchData("/api/degree", setFetchedData);
+      fetchData(`/api/post/${selectedUser.id}`, setFetchedData);
     },
   },
   {
