@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 import { getAllUsers } from "@/../db/api/user";
 
 export async function GET(Request) {
-  const users = await getAllUsers();
+  const users = await getAllUsers("admin");
 
   //console.log(users);
 

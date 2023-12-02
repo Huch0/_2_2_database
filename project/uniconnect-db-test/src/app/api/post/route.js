@@ -8,11 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getAllPosts } from "@/../db/api/post";
+import { parse } from "url";
 
 export async function GET(Request) {
-  const posts = await getAllPosts();
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
 
-  //console.log(users);
+  const posts = await getAllPosts(selectedRole);
 
   return NextResponse.json(posts);
 }

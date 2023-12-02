@@ -7,21 +7,35 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import {createLikesByUserIdAndPostId, deleteLikesByUserIdAndPostId, getLikesByPostId } from "@/../db/api/like";
+import {
+  createLikesByUserIdAndPostId,
+  deleteLikesByUserIdAndPostId,
+  getLikesByPostId,
+} from "@/../db/api/like";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const likes = await getLikesByPostId(params.postId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const likes = await getLikesByPostId(selectedRole, params.postId);
   return NextResponse.json(likes);
 }
 
 export async function POST(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const { user_id } = await Request.json();
-  await createLikesByUserIdAndPostId(user_id, params.postId);
+  await createLikesByUserIdAndPostId(selectedRole, user_id, params.postId);
   return GET(Request, { params });
 }
 
 export async function DELETE(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const { user_id } = await Request.json();
-  await deleteLikesByUserIdAndPostId(user_id, params.postId);
+  await deleteLikesByUserIdAndPostId(selectedRole, user_id, params.postId);
   return GET(Request, { params });
 }
