@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { editDegreeByUserId, getProfileByUserId } from "@/../db/api/profile";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const profile = await getProfileByUserId(params.userId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const profile = await getProfileByUserId(selectedRole, params.userId);
 
   //console.log(users);
 
@@ -18,10 +22,13 @@ export async function GET(Request, { params }) {
 }
 
 export async function POST(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
   const userId = params.id;
   const { degree } = await Request.json();
 
-  const updatedUser = await editDegreeByUserId(userId, degree);
+  const updatedUser = await editDegreeByUserId(selectedRole, userId, degree);
 
   return NextResponse.json(updatedUser);
 }

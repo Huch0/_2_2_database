@@ -1,18 +1,27 @@
 import fetchData from "@/utils/fetchData";
 import React, { useEffect, useState } from "react";
 
-export default function DegreeEditor({profile, selectedUser}) {
+export default function DegreeEditor({ profile, selectedUser }) {
   const [degree, setDegree] = useState("");
 
   useEffect(() => {
+    if (!profile) {
+      return;
+    }
     setDegree(profile.degree);
   }, [profile]);
 
   const handleConfirm = async () => {
-    const updatedDegree = await fetchData(`/api/profile/${selectedUser.id}`, {
-      method: "POST",
-      body: JSON.stringify({ degree }),
-    });
+    const updatedDegree = await fetchData(
+      `/api/profile/${selectedUser.id}`,
+      {
+        selectedRole: selectedUser.role,
+      },
+      {
+        method: "POST",
+        body: JSON.stringify({ degree }),
+      }
+    );
 
     console.log(updatedDegree);
   };

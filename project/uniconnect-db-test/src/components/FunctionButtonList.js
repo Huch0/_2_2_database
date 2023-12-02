@@ -45,7 +45,9 @@ const functionList = [
     contentType: "degreeEditor",
     onClick: (setContentType, setFetchedData, selectedUser) => {
       setContentType("degreeEditor");
-      fetchData(`/api/profile/${selectedUser.id}`, setFetchedData);
+      fetchData(`/api/profile/${selectedUser.id}`, setFetchedData, {
+        selectedRole: selectedUser.role,
+      });
     },
   },
   {
