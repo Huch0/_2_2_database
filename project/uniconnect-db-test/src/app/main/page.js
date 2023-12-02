@@ -12,22 +12,31 @@ export default function Home() {
   const [contentType, setContentType] = useState(null);
 
   return (
-    <div>
-      <UserSelector
-        users={users}
-        setUsers={setUsers}
-        setSelectedUser={setSelectedUser}
-      />
-      <FunctionButtonList
-        selectedUser={selectedUser}
-        setFetchedData={setFetchedData}
-        setContentType={setContentType}
-      />
-      <ContentDisplay
-        fetchedData={fetchedData}
-        contentType={contentType}
-        selectedUser={selectedUser}
-      />
-    </div>
+    <>
+      <div>
+        <UserSelector
+          users={users}
+          setUsers={setUsers}
+          setSelectedUser={setSelectedUser}
+        />
+        <FunctionButtonList
+          selectedUser={selectedUser}
+          setFetchedData={setFetchedData}
+          setContentType={setContentType}
+        />
+        <ContentDisplay
+          fetchedData={fetchedData}
+          contentType={contentType}
+          selectedUser={selectedUser}
+        />
+      </div>
+      {selectedUser && selectedUser.role === "banned" && (
+        <div className="mx-auto mt-10 max-w-2xl gap-x-8 border-t border-gray-200 pt-10">
+          <h1 className="text-2xl font-bold text-center text-red-500">
+            접근 권한이 없습니다.
+          </h1>
+        </div>
+      )}
+    </>
   );
 }
