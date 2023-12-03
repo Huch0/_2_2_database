@@ -7,21 +7,41 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import {deletePostByPostId, editPostByPostId } from "@/../db/api/post_delete_edit";
+import {
+  deletePostByPostId,
+  editPostByPostId,
+} from "@/../db/api/post_delete_edit";
+import { getAllPosts } from "@/../db/api/post";
+
+import { parse } from "url";
 
 export async function POST(Request, { params }) {
-    const postId = params.postId;
-    const { title, content } = await Request.json();
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
 
-    const updatedPost = await editPostByPostId(postId, title, content);
+  const postId = params.postId;
+  const { title, content } = await Request.json();
 
-    return NextResponse.json(updatedPost);
+  const updatedPost = await editPostByPostId(
+    selectedRole,
+    postId,
+    title,
+    content
+  );
+
+  const updatedPostsList = await getAllPosts(selectedRole);
+
+  return NextResponse.json(updatedPostsList);
 }
 
 export async function DELETE(Request, { params }) {
-    const postId = params.postId;
-    await deletePostByPostId(postId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
 
-    return NextResponse.JSON({ message: 'Post deleted successfully' });
+  const postId = params.postId;
+  await deletePostByPostId(selectedRole, postId);
 
+  const updatedPostsList = await getAllPosts(selectedRole);
+
+  return NextResponse.json(updatedPostsList);
 }

@@ -29,6 +29,7 @@ export default function Home() {
           fetchedData={fetchedData}
           setFetchedData={setFetchedData}
           contentType={contentType}
+          setContentType={setContentType}
           selectedUser={selectedUser}
         />
       </div>

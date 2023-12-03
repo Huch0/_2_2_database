@@ -3,7 +3,7 @@ import fetchData from "@/utils/fetchData";
 import moment from "moment";
 import CommentCard from "@/components/CommentCard";
 
-export default function PostCard({ post, selectedUser }) {
+export default function PostCard({ post, selectedUser, setFetchedData }) {
   const [author, setAuthor] = useState(null);
   const [likes, setLikes] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -39,11 +39,12 @@ export default function PostCard({ post, selectedUser }) {
     console.log(post.id);
     await fetchData(
       `/api/post_delete_edit/${post.id}`,
-      null,
+      setFetchedData,
       selectedUser.role,
       {
         method: "DELETE",
-      }
+      },
+      "post"
     );
   };
 
@@ -52,12 +53,13 @@ export default function PostCard({ post, selectedUser }) {
     const content = prompt("수정할 내용을 입력하세요");
     await fetchData(
       `/api/post_delete_edit/${post.id}`,
-      null,
+      setFetchedData,
       selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({ title, content }),
-      }
+      },
+      "post"
     );
   };
 
@@ -141,7 +143,11 @@ export default function PostCard({ post, selectedUser }) {
         </div>
 
         {showComments && (
-          <CommentCard comments={comments} selectedUser={selectedUser} />
+          <CommentCard
+            comments={comments}
+            selectedUser={selectedUser}
+            setFetchedData={setFetchedData}
+          />
         )}
       </div>
     </div>
