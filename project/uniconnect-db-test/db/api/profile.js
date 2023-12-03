@@ -12,19 +12,19 @@ export async function getProfileByUserId(selectedRole, id) {
   return profile;
 }
 
-export async function editDegreeByUserId(selectedRole, id, degree) {
+export async function editDegreeByUserId(selectedRole, user_id, degree) {
   const Profile = selectProfile(selectedRole);
 
-  const profile = await Profile.update(
+  const updatedProfile = await Profile.update(
     { degree: degree },
     {
       where: {
-        user_id: id,
+        user_id: user_id,
       },
     }
   );
 
-  return profile;
+  return getProfileByUserId(selectedRole, user_id);
 }
 
 function selectProfile(selectedRole) {

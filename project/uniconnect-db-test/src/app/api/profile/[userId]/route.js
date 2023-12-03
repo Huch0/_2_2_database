@@ -25,10 +25,14 @@ export async function POST(Request, { params }) {
   const { query } = parse(Request.url, true);
   const selectedRole = query.selectedRole;
 
-  const userId = params.id;
+  const user_id = params.userId;
   const { degree } = await Request.json();
 
-  const updatedUser = await editDegreeByUserId(selectedRole, userId, degree);
+  const updatedProfile = await editDegreeByUserId(
+    selectedRole,
+    user_id,
+    degree
+  );
 
-  return NextResponse.json(updatedUser);
+  return NextResponse.json(updatedProfile);
 }

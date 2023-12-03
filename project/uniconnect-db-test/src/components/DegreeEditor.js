@@ -1,21 +1,33 @@
 import fetchData from "@/utils/fetchData";
 import React, { useEffect, useState } from "react";
 
-export default function DegreeEditor({ fetchedData, selectedUser }) {
+export default function DegreeEditor({
+  fetchedData,
+  setFetchedData,
+  selectedUser,
+}) {
   const [degree, setDegree] = useState("");
 
   const handleConfirm = async () => {
-    const updatedDegree = await fetchData(
+    // Handle confirm action here
+    if (degree === "") {
+      alert("학위 과정을 입력하세요");
+      return;
+    }
+
+    await fetchData(
       `/api/profile/${selectedUser.id}`,
-      setDegree,
+      setFetchedData,
       selectedUser.role,
       {
         method: "POST",
-        body: JSON.stringify({ degree }),
-      }
+        body: JSON.stringify({
+          user_id: selectedUser.id,
+          degree: degree,
+        }),
+      },
+      "degreeEditor"
     );
-
-    console.log(updatedDegree);
   };
 
   return (
@@ -28,7 +40,7 @@ export default function DegreeEditor({ fetchedData, selectedUser }) {
                 현재 학위 과정 :{" "}
                 {fetchedData.data.degree === null
                   ? "없음"
-                  : fetchedData.data.degree}
+                  : degreeMap[fetchedData.data.degree]}
               </span>
             </div>
           </div>
@@ -56,3 +68,10 @@ export default function DegreeEditor({ fetchedData, selectedUser }) {
     </div>
   );
 }
+
+const degreeMap = {
+  undergraduate: "학부생",
+  master: "석사",
+  doctoral: "박사",
+  professor: "교수",
+};
