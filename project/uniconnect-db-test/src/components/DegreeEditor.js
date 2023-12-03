@@ -16,13 +16,12 @@ export default function DegreeEditor({
     }
 
     await fetchData(
-      `/api/profile/${selectedUser.id}`,
+      `/api/editDegree/${selectedUser.id}`,
       setFetchedData,
       selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({
-          user_id: selectedUser.id,
           degree: degree,
         }),
       },
