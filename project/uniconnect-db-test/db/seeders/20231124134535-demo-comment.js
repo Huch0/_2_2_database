@@ -58,6 +58,9 @@ module.exports = {
       ],
       {}
     );
+    await queryInterface.sequelize.query(
+      `SELECT setval('"Comments_id_seq"', (SELECT MAX(id) FROM "Comments"));`
+    );
   },
 
   async down(queryInterface, Sequelize) {

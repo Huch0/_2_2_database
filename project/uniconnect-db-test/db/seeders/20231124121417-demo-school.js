@@ -24,6 +24,9 @@ module.exports = {
       ],
       {}
     );
+    await queryInterface.sequelize.query(
+      `SELECT setval('"Schools_id_seq"', (SELECT MAX(id) FROM "Schools"));`
+    );
   },
 
   async down(queryInterface, Sequelize) {
