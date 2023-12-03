@@ -1,11 +1,32 @@
-function UserCard({ user }) {
-  const handleBan = () => {};
+import fetchData from "@/utils/fetchData";
+
+function UserCard({ user, setFetchedData, selectedUser }) {
+  const handleBan = async () => {
+    let method = "";
+    if (user.role === "banned") {
+      method = "unBanUser";
+    } else {
+      method = "banUser";
+    }
+    await fetchData(
+      `/api/banUser/${user.id}`,
+      setFetchedData,
+      selectedUser.role,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          method: method,
+        }),
+      },
+      "user"
+    );
+  };
   let cardColor = "bg-white";
-  let statusMessage = "밴";
+  let statusMessage = "정지";
 
   if (user && user.role === "banned") {
     cardColor = "bg-red-200";
-    statusMessage = "정지 된 사용자";
+    statusMessage = "정지 해제";
   }
 
   return (
@@ -24,7 +45,6 @@ function UserCard({ user }) {
         <button
           onClick={handleBan}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          disabled={user.role === "banned"}
         >
           {statusMessage}
         </button>
@@ -33,12 +53,23 @@ function UserCard({ user }) {
   );
 }
 
-export default function UserList({ fetchedData, selectedUser }) {
+export default function UserList({
+  fetchedData,
+  setFetchedData,
+  selectedUser,
+}) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
         fetchedData.dataType === "user" &&
-        fetchedData.data.map((user) => <UserCard key={user.id} user={user} />)}
+        fetchedData.data.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+            setFetchedData={setFetchedData}
+            selectedUser={selectedUser}
+          />
+        ))}
     </div>
   );
 }
