@@ -1,16 +1,34 @@
 import fetchData from "@/utils/fetchData";
 import React, { useEffect, useState } from "react";
 
-export default function MajorEditor({ fetchedData, selectedUser }) {
+export default function MajorEditor({
+  fetchedData,
+  setFetchedData,
+  selectedUser,
+}) {
   const [major, setMajor] = useState("");
   const [currentMajor, setCurrentMajor] = useState(null);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     // Handle confirm action here
-  };
+    if (major === "") {
+      alert("전공을 입력하세요");
+      return;
+    }
 
-  const handleCancel = () => {
-    // Handle cancel action here
+    await fetchData(
+      `/api/editMajor/${selectedUser.id}`,
+      setFetchedData,
+      selectedUser.role,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          user_id: selectedUser.id,
+          major_name: major,
+        }),
+      },
+      "majorEditor"
+    );
   };
 
   useEffect(() => {

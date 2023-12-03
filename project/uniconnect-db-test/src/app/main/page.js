@@ -26,6 +26,7 @@ export default function Home() {
         />
         <ContentDisplay
           fetchedData={fetchedData}
+          setFetchedData={setFetchedData}
           contentType={contentType}
           selectedUser={selectedUser}
         />
