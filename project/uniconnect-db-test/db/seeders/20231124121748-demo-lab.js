@@ -37,6 +37,9 @@ module.exports = {
       ],
       {}
     );
+    await queryInterface.sequelize.query(
+      `SELECT setval('"Labs_id_seq"', (SELECT MAX(id) FROM "Labs"));`
+    );
   },
 
   async down(queryInterface, Sequelize) {

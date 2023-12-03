@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import fetchData from "@/utils/fetchData";
 
-export default function UserSelector({ users, setUsers, setSelectedUser }) {
+export default function UserSelector({
+  users,
+  setUsers,
+  setSelectedUser,
+  fetchedData,
+}) {
   useEffect(() => {
     fetchData("/api/user", setUsers, "admin", {}, "user");
   }, []);
+
+  useEffect(() => {
+    if (fetchedData) {
+      fetchData("/api/user", setUsers, "admin", {}, "user");
+    }
+  }, [fetchedData]);
 
   return (
     <div className="flex justify-center my-2">

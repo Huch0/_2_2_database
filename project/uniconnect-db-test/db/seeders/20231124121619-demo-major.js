@@ -30,6 +30,9 @@ module.exports = {
       ],
       {}
     );
+    await queryInterface.sequelize.query(
+      `SELECT setval('"Majors_id_seq"', (SELECT MAX(id) FROM "Majors"));`
+    );
   },
 
   async down(queryInterface, Sequelize) {

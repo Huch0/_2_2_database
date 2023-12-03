@@ -11,6 +11,7 @@ import ManagerRequestList from "./ManagerRequestList";
 export default function ContentDisplay({
   selectedUser,
   fetchedData,
+  setFetchedData,
   contentType,
 }) {
   if (!contentType) {
@@ -57,6 +58,7 @@ export default function ContentDisplay({
           {ContentComponent && (
             <ContentComponent
               fetchedData={fetchedData}
+              setFetchedData={setFetchedData}
               selectedUser={selectedUser}
             />
           )}

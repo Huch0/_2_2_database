@@ -20,6 +20,9 @@ module.exports = {
         createdAt: new Date(),
       },
     ]);
+    await queryInterface.sequelize.query(
+      `SELECT setval('"Manager_requests_id_seq"', (SELECT MAX(id) FROM "Manager_requests"));`
+    );
   },
 
   async down(queryInterface, Sequelize) {
