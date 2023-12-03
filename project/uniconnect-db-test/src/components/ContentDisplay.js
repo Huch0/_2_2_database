@@ -13,10 +13,13 @@ export default function ContentDisplay({
   fetchedData,
   setFetchedData,
   contentType,
+  setContentType,
 }) {
   if (!contentType) {
     return null;
   }
+
+  console.log(contentType);
 
   let ContentComponent;
   switch (contentType) {
@@ -60,6 +63,7 @@ export default function ContentDisplay({
               fetchedData={fetchedData}
               setFetchedData={setFetchedData}
               selectedUser={selectedUser}
+              setContentType={setContentType}
             />
           )}
         </div>

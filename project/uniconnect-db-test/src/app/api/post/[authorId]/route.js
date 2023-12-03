@@ -8,6 +8,7 @@
 
 import { NextResponse } from "next/server";
 import { addPostByAuthorId, getPostByAuthorId } from "@/../db/api/post";
+import { getAllPosts } from "@/../db/api/post";
 import { parse } from "url";
 
 export async function GET(Request, { params }) {
@@ -28,7 +29,9 @@ export async function POST(Request, { params }) {
   const { title, content } = await Request.json();
   await addPostByAuthorId(selectedRole, authorId, title, content);
 
-  return GET(Request, { params });
+  const updatedPostsLists = await getAllPosts(selectedRole);
+
+  return NextResponse.json(updatedPostsLists);
 }
 
 export async function DELETE(Request, { params }) {
@@ -39,7 +42,9 @@ export async function DELETE(Request, { params }) {
   // console.log(postId);
   await deletePostByPostId(selectedRole, postId);
 
-  return GET(Request, { params });
+  const updatedPostsLists = await getAllPosts(selectedRole);
+
+  return NextResponse.json(updatedPostsLists);
 }
 
 export async function PUT(Request, { params }) {
@@ -49,5 +54,7 @@ export async function PUT(Request, { params }) {
   const { postId, title, content } = await Request.json();
   await editPostByPostId(selectedRole, postId, title, content);
 
-  return GET(Request, { params });
+  const updatedPostsLists = await getAllPosts(selectedRole);
+
+  return NextResponse.json(updatedPostsLists);
 }

@@ -7,32 +7,17 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import { editDegreeByUserId, getProfileByUserId } from "@/../db/api/profile";
+import { editDegreeAndRole } from "@/../db/api/transaction/editDegree";
 import { parse } from "url";
-
-export async function GET(Request, { params }) {
-  const { query } = parse(Request.url, true);
-  const selectedRole = query.selectedRole;
-
-  const profile = await getProfileByUserId(selectedRole, params.userId);
-
-  //console.log(users);
-
-  return NextResponse.json(profile);
-}
 
 export async function POST(Request, { params }) {
   const { query } = parse(Request.url, true);
   const selectedRole = query.selectedRole;
-
   const user_id = params.userId;
+
   const { degree } = await Request.json();
 
-  const updatedProfile = await editDegreeByUserId(
-    selectedRole,
-    user_id,
-    degree
-  );
+  const updatedProfile = await editDegreeAndRole(selectedRole, user_id, degree);
 
   return NextResponse.json(updatedProfile);
 }

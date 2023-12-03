@@ -22,6 +22,38 @@ export async function getUserById(selectedRole, id) {
   return user;
 }
 
+export async function banUser(selectedRole, user_id) {
+  const User = selectUser(selectedRole);
+
+  const user = await User.findOne({
+    where: {
+      id: user_id,
+    },
+  });
+
+  user.role = "banned";
+
+  await user.save();
+
+  return user;
+}
+
+export async function unBanUser(selectedRole, user_id) {
+  const User = selectUser(selectedRole);
+
+  const user = await User.findOne({
+    where: {
+      id: user_id,
+    },
+  });
+
+  user.role = "reader";
+
+  await user.save();
+
+  return user;
+}
+
 function selectUser(selectedRole) {
   let User = null;
 

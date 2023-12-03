@@ -1,21 +1,28 @@
 import fetchData from "@/utils/fetchData";
 import React, { useState } from "react";
 
-export default function PostEditor({ fetchedData, selectedUser }) {
+export default function PostEditor({
+  fetchedData,
+  setFetchedData,
+  setContentType,
+  selectedUser,
+}) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleConfirm = async () => {
     const response = await fetchData(
       `/api/post/${selectedUser.id}`,
-      null,
+      setFetchedData,
       selectedUser.role,
       {
         method: "POST",
         body: JSON.stringify({ title, content }),
-      }
+      },
+      "post"
     );
-    //다 작성하고 나면 다시 홈으로 돌아가기, 새로고침, title, content 초기화
+
+    setContentType("post");
   };
 
   return (
