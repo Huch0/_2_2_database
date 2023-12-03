@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getAllLabs } from "@/../db/api/lab";
+import { parse } from "url";
 
 export async function GET(Request) {
-  const labs = await getAllLabs();
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const labs = await getAllLabs(selectedRole);
 
   //console.log(users);
 

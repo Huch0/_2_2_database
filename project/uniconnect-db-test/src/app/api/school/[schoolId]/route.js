@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getSchoolById } from "@/../db/api/school";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const school = await getSchoolById(params.schoolId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const school = await getSchoolById(selectedRole, params.schoolId);
 
   //console.log(users);
 

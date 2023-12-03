@@ -74,4 +74,26 @@ const init_contacts = (sequelize, Types) => {
   return Contact;
 };
 
-export default init_contacts(connection, DataTypes);
+const adminContact = init_contacts(connection.adminSequelize, DataTypes);
+const readerContact = init_contacts(connection.readerSequelize, DataTypes);
+const studentContact = init_contacts(connection.studentSequelize, DataTypes);
+const researcherContact = init_contacts(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerContact = init_contacts(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedContact = init_contacts(connection.bannedSequelize, DataTypes);
+
+const Contacts = {
+  adminContact,
+  readerContact,
+  studentContact,
+  researcherContact,
+  labManagerContact,
+  bannedContact,
+};
+
+export default Contacts;

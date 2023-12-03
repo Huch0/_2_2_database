@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import fetchData from "@/utils/fetchData";
+import React, { useEffect, useState } from "react";
 
-export default function MajorEditor() {
+export default function MajorEditor({ fetchedData, selectedUser }) {
   const [major, setMajor] = useState("");
+  const [currentMajor, setCurrentMajor] = useState(null);
 
   const handleConfirm = () => {
     // Handle confirm action here
@@ -11,8 +13,30 @@ export default function MajorEditor() {
     // Handle cancel action here
   };
 
+  useEffect(() => {
+    if (fetchedData && fetchedData.dataType === "majorEditor") {
+      fetchData(
+        `/api/major/${fetchedData.data.major_id}`,
+        setCurrentMajor,
+        selectedUser.role
+      );
+    }
+  }, [fetchedData]);
+
   return (
     <div className="flex flex-col">
+      {fetchedData && fetchedData.dataType === "majorEditor" && (
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <div className="flex flex-col">
+              <span className="font-bold">
+                현재 전공 :{" "}
+                {currentMajor !== null ? currentMajor.major_name : "없음"}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
       <input
         type="text"
         placeholder="전공을 입력하세요"

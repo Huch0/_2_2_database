@@ -3,7 +3,7 @@ import fetchData from "@/utils/fetchData";
 
 export default function UserSelector({ users, setUsers, setSelectedUser }) {
   useEffect(() => {
-    fetchData("/api/user", setUsers);
+    fetchData("/api/user", setUsers, "admin", {}, "user");
   }, []);
 
   return (
@@ -12,16 +12,17 @@ export default function UserSelector({ users, setUsers, setSelectedUser }) {
         className="block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
         onChange={(e) =>
           setSelectedUser(
-            users.find((user) => user.id === parseInt(e.target.value))
+            users.data.find((user) => user.id === parseInt(e.target.value))
           )
         }
       >
         <option value="">유저를 선택하세요</option>
-        {users.map((user) => (
-          <option key={user.id} value={user.id}>
-            {user.user_name} / {user.role}
-          </option>
-        ))}
+        {users.dataType === "user" &&
+          users.data.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.user_name} / {user.role}
+            </option>
+          ))}
       </select>
     </div>
   );

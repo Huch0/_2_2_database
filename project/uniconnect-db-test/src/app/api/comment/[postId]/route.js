@@ -8,9 +8,13 @@
 
 import { NextResponse } from "next/server";
 import { getCommentsByPostId } from "@/../db/api/comment";
+import { parse } from "url";
 
 export async function GET(Request, { params }) {
-  const comments = await getCommentsByPostId(params.postId);
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const comments = await getCommentsByPostId(selectedRole, params.postId);
 
   return NextResponse.json(comments);
 }

@@ -19,7 +19,9 @@ export default function CommentCard({ comments, selectedUser }) {
     const fetchAuthors = async () => {
       const updatedComments = await Promise.all(
         comments.map(async (comment) => {
-          const response = await fetch(`/api/user/${comment.author_id}`);
+          const response = await fetch(
+            `/api/user/${comment.author_id}?selectedRole=${selectedUser.role}`
+          );
           const author = await response.json();
           return { ...comment, author_name: author.user_name };
         })

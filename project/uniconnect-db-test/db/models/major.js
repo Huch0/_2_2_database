@@ -41,4 +41,20 @@ const init_majors = (sequelize, Types) => {
   return Major;
 };
 
-export default init_majors(connection, DataTypes);
+const adminMajor = init_majors(connection.adminSequelize, DataTypes);
+const readerMajor = init_majors(connection.readerSequelize, DataTypes);
+const studentMajor = init_majors(connection.studentSequelize, DataTypes);
+const researcherMajor = init_majors(connection.researcherSequelize, DataTypes);
+const labManagerMajor = init_majors(connection.labManagerSequelize, DataTypes);
+const bannedMajor = init_majors(connection.bannedSequelize, DataTypes);
+
+const Majors = {
+  adminMajor,
+  readerMajor,
+  studentMajor,
+  researcherMajor,
+  labManagerMajor,
+  bannedMajor,
+};
+
+export default Majors;

@@ -1,19 +1,22 @@
-import fetchData from '@/utils/fetchData';
-import React, { useState } from 'react';
-import { useRouter } from "next/router";
+import fetchData from "@/utils/fetchData";
+import React, { useState } from "react";
 
-export default function PostEditor({ selectedUser }) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+export default function PostEditor({ fetchedData, selectedUser }) {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-  const handleConfirm = async () => { 
-    const response = await fetchData(`/api/post/${selectedUser.id}`, null, {
-      method: "POST",
-      body: JSON.stringify({ title, content }),
-    });
-    //다 작성하고 나면 다시 홈으로 돌아가기, 새로고침, title, content 초기화    
-  }; 
-  
+  const handleConfirm = async () => {
+    const response = await fetchData(
+      `/api/post/${selectedUser.id}`,
+      null,
+      selectedUser.role,
+      {
+        method: "POST",
+        body: JSON.stringify({ title, content }),
+      }
+    );
+    //다 작성하고 나면 다시 홈으로 돌아가기, 새로고침, title, content 초기화
+  };
 
   return (
     <div className="flex flex-col">

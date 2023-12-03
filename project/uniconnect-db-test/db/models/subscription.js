@@ -50,4 +50,38 @@ const init_subscriptions = (sequelize, Types) => {
   return Subscription;
 };
 
-export default init_subscriptions(connection, DataTypes);
+const adminSubscription = init_subscriptions(
+  connection.adminSequelize,
+  DataTypes
+);
+const readerSubscription = init_subscriptions(
+  connection.readerSequelize,
+  DataTypes
+);
+const studentSubscription = init_subscriptions(
+  connection.studentSequelize,
+  DataTypes
+);
+const researcherSubscription = init_subscriptions(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerSubscription = init_subscriptions(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedSubscription = init_subscriptions(
+  connection.bannedSequelize,
+  DataTypes
+);
+
+const Subscriptions = {
+  adminSubscription,
+  readerSubscription,
+  studentSubscription,
+  researcherSubscription,
+  labManagerSubscription,
+  bannedSubscription,
+};
+
+export default Subscriptions;

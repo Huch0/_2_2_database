@@ -41,4 +41,26 @@ const init_schools = (sequelize, Types) => {
   return School;
 };
 
-export default init_schools(connection, DataTypes);
+const adminSchool = init_schools(connection.adminSequelize, DataTypes);
+const readerSchool = init_schools(connection.readerSequelize, DataTypes);
+const studentSchool = init_schools(connection.studentSequelize, DataTypes);
+const researcherSchool = init_schools(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerSchool = init_schools(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedSchool = init_schools(connection.bannedSequelize, DataTypes);
+
+const Schools = {
+  adminSchool,
+  readerSchool,
+  studentSchool,
+  researcherSchool,
+  labManagerSchool,
+  bannedSchool,
+};
+
+export default Schools;

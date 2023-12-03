@@ -15,9 +15,9 @@ export default function PostCard({ post, selectedUser }) {
     if (!post.author_id) {
       return;
     }
-    fetchData(`/api/user/${post.author_id}`, setAuthor);
-    fetchData(`/api/like/${post.id}`, setLikes);
-    fetchData(`/api/comment/${post.id}`, setComments);
+    fetchData(`/api/user/${post.author_id}`, setAuthor, selectedUser.role);
+    fetchData(`/api/like/${post.id}`, setLikes, selectedUser.role);
+    fetchData(`/api/comment/${post.id}`, setComments, selectedUser.role);
   }, [post]);
 
   useEffect(() => {
@@ -29,26 +29,36 @@ export default function PostCard({ post, selectedUser }) {
   }, [likes, selectedUser]);
 
   const handleLike = async () => {
-    await fetchData(`/api/like/${post.id}`, setLikes, {
+    await fetchData(`/api/like/${post.id}`, setLikes, selectedUser.role, {
       method: liked ? "DELETE" : "POST",
-      body: JSON.stringify({ user_id: `${selectedUser.id}`})
+      body: JSON.stringify({ user_id: `${selectedUser.id}` }),
     });
   };
 
   const handleDelete = async () => {
     console.log(post.id);
-    await fetchData(`/api/post_delete_edit/${post.id}`, null, {
-      method: "DELETE",
-    });
+    await fetchData(
+      `/api/post_delete_edit/${post.id}`,
+      null,
+      selectedUser.role,
+      {
+        method: "DELETE",
+      }
+    );
   };
-  
+
   const handleEdit = async () => {
     const title = prompt("수정할 제목을 입력하세요");
     const content = prompt("수정할 내용을 입력하세요");
-    await fetchData(`/api/post_delete_edit/${post.id}`, null, {
-      method: "POST",
-      body: JSON.stringify({ title, content }),
-    });
+    await fetchData(
+      `/api/post_delete_edit/${post.id}`,
+      null,
+      selectedUser.role,
+      {
+        method: "POST",
+        body: JSON.stringify({ title, content }),
+      }
+    );
   };
 
   return (

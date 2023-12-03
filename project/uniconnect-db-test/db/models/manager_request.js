@@ -62,4 +62,38 @@ const init_manager_requests = (sequelize, Types) => {
   return Manager_request;
 };
 
-export default init_manager_requests(connection, DataTypes);
+const adminManager_request = init_manager_requests(
+  connection.adminSequelize,
+  DataTypes
+);
+const readerManager_request = init_manager_requests(
+  connection.readerSequelize,
+  DataTypes
+);
+const studentManager_request = init_manager_requests(
+  connection.studentSequelize,
+  DataTypes
+);
+const researcherManager_request = init_manager_requests(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerManager_request = init_manager_requests(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedManager_request = init_manager_requests(
+  connection.bannedSequelize,
+  DataTypes
+);
+
+const Manager_requests = {
+  adminManager_request,
+  readerManager_request,
+  studentManager_request,
+  researcherManager_request,
+  labManagerManager_request,
+  bannedManager_request,
+};
+
+export default Manager_requests;

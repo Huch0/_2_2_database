@@ -68,4 +68,20 @@ const init_users = (sequelize, Types) => {
   return User;
 };
 
-export default init_users(connection, DataTypes);
+const adminUser = init_users(connection.adminSequelize, DataTypes);
+const readerUser = init_users(connection.readerSequelize, DataTypes);
+const studentUser = init_users(connection.studentSequelize, DataTypes);
+const researcherUser = init_users(connection.researcherSequelize, DataTypes);
+const labManagerUser = init_users(connection.labManagerSequelize, DataTypes);
+const bannedUser = init_users(connection.bannedSequelize, DataTypes);
+
+const Users = {
+  adminUser,
+  readerUser,
+  studentUser,
+  researcherUser,
+  labManagerUser,
+  bannedUser,
+};
+
+export default Users;

@@ -63,4 +63,20 @@ const init_likes = (sequelize, Types) => {
   return Like;
 };
 
-export default init_likes(connection, DataTypes);
+const adminLike = init_likes(connection.adminSequelize, DataTypes);
+const readerLike = init_likes(connection.readerSequelize, DataTypes);
+const studentLike = init_likes(connection.studentSequelize, DataTypes);
+const researcherLike = init_likes(connection.researcherSequelize, DataTypes);
+const labManagerLike = init_likes(connection.labManagerSequelize, DataTypes);
+const bannedLike = init_likes(connection.bannedSequelize, DataTypes);
+
+const Likes = {
+  adminLike,
+  readerLike,
+  studentLike,
+  researcherLike,
+  labManagerLike,
+  bannedLike,
+};
+
+export default Likes;

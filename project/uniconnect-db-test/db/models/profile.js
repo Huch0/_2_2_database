@@ -95,4 +95,26 @@ const init_profiles = (sequelize, Types) => {
   return Profile;
 };
 
-export default init_profiles(connection, DataTypes);
+const adminProfile = init_profiles(connection.adminSequelize, DataTypes);
+const readerProfile = init_profiles(connection.readerSequelize, DataTypes);
+const studentProfile = init_profiles(connection.studentSequelize, DataTypes);
+const researcherProfile = init_profiles(
+  connection.researcherSequelize,
+  DataTypes
+);
+const labManagerProfile = init_profiles(
+  connection.labManagerSequelize,
+  DataTypes
+);
+const bannedProfile = init_profiles(connection.bannedSequelize, DataTypes);
+
+const Profiles = {
+  adminProfile,
+  readerProfile,
+  studentProfile,
+  researcherProfile,
+  labManagerProfile,
+  bannedProfile,
+};
+
+export default Profiles;
