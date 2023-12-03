@@ -32,7 +32,11 @@ export default function MajorEditor({
   };
 
   useEffect(() => {
-    if (fetchedData && fetchedData.dataType === "majorEditor") {
+    if (
+      fetchedData &&
+      fetchedData.dataType === "majorEditor" &&
+      fetchedData.data.major_id !== null
+    ) {
       fetchData(
         `/api/major/${fetchedData.data.major_id}`,
         setCurrentMajor,

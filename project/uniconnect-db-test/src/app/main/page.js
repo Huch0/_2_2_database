@@ -18,6 +18,7 @@ export default function Home() {
           users={users}
           setUsers={setUsers}
           setSelectedUser={setSelectedUser}
+          fetchedData={fetchedData}
         />
         <FunctionButtonList
           selectedUser={selectedUser}
