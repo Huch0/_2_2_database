@@ -5,10 +5,21 @@ function LabCard({ lab, selectedUser }) {
   const [school, setSchool] = useState(null);
   const [contact, setContact] = useState(null);
   const [contactStatus, setContactStatus] = useState(null);
+  const [managerRequestStatus, setManagerRequestStatus] = useState(null);
   const lab_id = JSON.stringify(lab.id)
+  const student_id = JSON.stringify(selectedUser.id)
+
+  const handleManagerRequest = () => {
+    fetchData(`/api/manager_requests/${student_id}`, null, selectedUser.role, {
+      method: "POST",
+      body: {
+        lab_id: lab_id,
+      },
+    });
+  };
 
   const handleContactRequest = () => {
-    fetchData(`/api/contact/studentId/${selectedUser.id}`, setContact, selectedUser.role, {
+    fetchData(`/api/contact/studentId/${student_id}`, setContact, selectedUser.role, {
       method: "POST",
       body: {
         lab_id: lab_id,
@@ -23,7 +34,7 @@ function LabCard({ lab, selectedUser }) {
 
   useEffect(() => {
     fetchData(
-      `/api/contact/studentId/${selectedUser.id}`,
+      `/api/contact/studentId/${student_id}`,
       setContact,
       selectedUser.role
     );
@@ -83,7 +94,9 @@ function LabCard({ lab, selectedUser }) {
           // research이고 lab의 manager가 아니면 보임.
           selectedUser.role === "researcher" &&
             selectedUser.id !== lab.manager_id && (
-              <button className="bg-white text-blue-500 border hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded">
+              <button className="bg-white text-blue-500 border hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded"
+                onClick={handleManagerRequest}
+                >
                 연구실 관리자 신청
               </button>
             )

@@ -10,6 +10,19 @@ export async function getAllManager_requests(selectedRole) {
   return manager_requests;
 }
 
+export async function createManager_request(selectedRole, manager_request) {
+  const Manager_request = setManager_request(selectedRole);
+
+  const newManager_request = await Manager_request.create(
+    {
+      user_id: manager_request.user_id,
+      lab_id: manager_request.lab_id,
+    }
+  );
+
+  return newManager_request;
+}
+
 function setManager_request(selectedRole) {
   let Manager_request = null;
 
