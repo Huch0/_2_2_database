@@ -5,10 +5,15 @@ function LabCard({ lab, selectedUser }) {
   const [school, setSchool] = useState(null);
   const [contact, setContact] = useState(null);
   const [contactStatus, setContactStatus] = useState(null);
+  const lab_id = JSON.stringify(lab.id)
 
   const handleContactRequest = () => {
-    // 연구실 컨택 요청
-    console.log("연구실 컨택 요청");
+    fetchData(`/api/contact/studentId/${selectedUser.id}`, setContact, selectedUser.role, {
+      method: "POST",
+      body: {
+        lab_id: lab_id,
+      },
+    });
   };
 
   useEffect(() => {

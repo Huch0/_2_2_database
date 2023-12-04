@@ -1,9 +1,33 @@
 import { useEffect, useState } from "react";
 import fetchData from "@/utils/fetchData";
 
-function ContactCard({ contact, selectedUser }) {
-  const handleConfirm = () => {};
-  const handleCancel = () => {};
+function ContactCard({ contact, selectedUser }) { 
+  const [student, setStudent] = useState(null);
+  const [studentProfile, setStudentProfile] = useState(null);
+  const [school, setSchool] = useState(null);
+  const [major, setMajor] = useState(null);
+
+  const handleConfirm = async () => {
+    fetchData(
+      `/api/contact/studentId/${contact.student_id}`, setStudentProfile, selectedUser.role,
+      {
+        method: "PUT",
+        body: {
+          status: "accepted",
+        },
+      });
+    };
+
+  const handleCancel = async () => {
+    fetchData(
+      `/api/contact/studentId/${contact.student_id}`, setStudentProfile, selectedUser.role,
+      {
+        method: "PUT",
+        body: {
+          status: "rejected",
+        },
+      });
+    };
 
   let cardColor;
   let statusMessage;
@@ -25,11 +49,6 @@ function ContactCard({ contact, selectedUser }) {
       statusMessage = "알 수 없음";
       break;
   }
-
-  const [student, setStudent] = useState(null);
-  const [studentProfile, setStudentProfile] = useState(null);
-  const [school, setSchool] = useState(null);
-  const [major, setMajor] = useState(null);
 
   useEffect(() => {
     fetchData(`/api/user/${contact.student_id}`, setStudent, selectedUser.role);
