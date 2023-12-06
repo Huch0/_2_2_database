@@ -7,7 +7,7 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import { getContactByStudentId, createContact, updateContact} from "@/../db/api/contact";
+import { getContactsByLabId, getContactByStudentId, createContact, updateContact} from "@/../db/api/contact";
 import { parse } from "url";
 
 export async function GET(Request, { params }) {
@@ -42,13 +42,9 @@ export async function PUT(Request, { params }) {
   const selectedRole = query.selectedRole;
 
   const student_id = params.studentId;
-  const {status} = await Request.json();
+  const {status, lab_id} = await Request.json();
 
-  const contact = await updateContact(selectedRole, student_id, 
-    {
-      status: status,
-    }
-  );
+  const updatedContactsList = await updateContact(selectedRole, student_id, status, lab_id);
 
-  return NextResponse.json(contact);
+  return NextResponse.json(updatedContactsList);
 }

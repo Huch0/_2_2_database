@@ -7,7 +7,7 @@
 //  A simple GET Example
 
 import { NextResponse } from "next/server";
-import { createManager_request } from "@/../db/api/manager_requests";
+import { createManager_request,manageManager_request } from "@/../db/api/manager_requests";
 import { parse } from "url";
 
 export async function POST(Request, { params }) {
@@ -16,8 +16,6 @@ export async function POST(Request, { params }) {
 
   const student_id = params.student_id;
   const {lab_id} = await Request.json();
-  console.log(lab_id);
-  console.log(student_id);
 
   const manager_request = await createManager_request(selectedRole, {
     user_id : student_id,
@@ -25,4 +23,19 @@ export async function POST(Request, { params }) {
   });
 
   return NextResponse.json(manager_request);
+}
+
+export async function DELETE(Request, { params }) {
+  const { query } = parse(Request.url, true);
+  const selectedRole = query.selectedRole;
+
+  const student_id = params.student_id;
+  const { status, lab_id } = await Request.json();
+  const mangage_request = await manageManager_request(selectedRole,{
+    user_id : student_id,
+    lab_id : lab_id,
+    status : status,  
+  });
+
+  return NextResponse.json(mangage_request);
 }

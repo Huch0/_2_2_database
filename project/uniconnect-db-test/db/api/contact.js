@@ -29,32 +29,37 @@ export async function getContactByStudentId(selectedRole, id) {
 export async function createContact(selectedRole, contact) {
   const Contact = selectContact(selectedRole);
 
-  const newContact = await Contact.create(
+  await Contact.create(
     {
       student_id: contact.student_id,
       lab_id: contact.lab_id,
+      status: contact.status,
       portfolio_path: "not exist",
     }
   );
 
-  return newContact;
+  const newContactsList = getContactsByLabId(selectedRole, contact.lab_id);
+
+  return newContactsList;
 }
 
-export async function updateContact(selectedRole, id, contact) {
+export async function updateContact(selectedRole, id, status, lab_id) {
   const Contact = selectContact(selectedRole);
 
   const updatedContact = await Contact.update(
     {
-      status: contact.status,
+      status: status,
     },
     {
       where: {
         student_id: id,
       },
-    }
+    }   
   );
 
-  return updatedContact;
+  const newContactsList = getContactsByLabId(selectedRole, lab_id);
+
+  return newContactsList;
 }
 
 function selectContact(selectedRole) {

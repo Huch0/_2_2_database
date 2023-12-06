@@ -2,18 +2,34 @@ import { useState, useEffect } from "react";
 import fetchData from "@/utils/fetchData";
 
 function RequestCard({ request, selectedUser }) {
-  const handleConfirm = () => {};
-  const handleCancel = () => {};
-
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const [user, setUser] = useState(null);
   const [lab, setLab] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
+  const confirmedRequest = async () => {
+    fetchData(`/api/manager_requests/${request.user_id}`, setIsConfirmed, selectedUser.role,{
+      method: "DELETE",
+      body: JSON.stringify({status : "confirmed", lab_id : request.lab_id}),
+    });
+    setRefresh(!refresh);
+  }
+
+  const cancelRequests = async () => {
+    fetchData(`/api/manager_requests/${request.user_id}`, setIsConfirmed, selectedUser.role,{
+      method: "DELETE",
+      body: JSON.stringify({status : "cancled", lab_id : request.lab_id}),
+    });
+    setRefresh(!refresh);
+  }
+    
 
   useEffect(() => {
     // console.log(request, user, lab);
     if (!request || !request.user_id || !request.lab_id) return;
     fetchData(`/api/user/${request.user_id}`, setUser, selectedUser.role);
     fetchData(`/api/lab/${request.lab_id}`, setLab, selectedUser.role);
-  }, [request]);
+  }, [request], [refresh]);
 
   return (
     <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto my-1 w-full flex-col justify-between">
@@ -29,13 +45,13 @@ function RequestCard({ request, selectedUser }) {
       </div>
       <div className="flex justify-end space-x-4 p-4">
         <button
-          onClick={handleConfirm}
+          onClick={confirmedRequest}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           수락
         </button>
         <button
-          onClick={handleCancel}
+          onClick={cancelRequests}
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
         >
           거절
