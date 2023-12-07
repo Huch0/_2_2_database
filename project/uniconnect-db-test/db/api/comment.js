@@ -13,6 +13,21 @@ export async function getCommentsByPostId(selectedRole, id) {
   return comments;
 }
 
+export async function createComment(selectedRole, comment) {
+  const Comment = selectComment(selectedRole);
+  const {content, author_id, post_id} = comment;
+
+  const newComment = await Comment.create(
+    {
+      content: content,
+      author_id: author_id,
+      post_id: post_id,
+    }
+  );
+
+  return newComment;
+}
+
 function selectComment(selectedRole) {
   let Comment = null;
 

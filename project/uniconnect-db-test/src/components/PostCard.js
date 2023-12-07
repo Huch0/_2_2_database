@@ -146,7 +146,8 @@ export default function PostCard({ post, selectedUser, setFetchedData }) {
           <CommentCard
             comments={comments}
             selectedUser={selectedUser}
-            setFetchedData={setFetchedData}
+            setComments={setComments}
+            postId={post.id}
           />
         )}
       </div>

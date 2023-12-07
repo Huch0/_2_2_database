@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
+import fetchData from "@/utils/fetchData";
 
-export default function CommentCard({ comments, selectedUser }) {
+export default function CommentCard({
+  comments,
+  setComments,
+  selectedUser,
+  postId,
+}) {
   const [newComment, setNewComment] = useState("");
   const [commentsWithAuthor, setCommentsWithAuthor] = useState([]);
-
   const handleNewCommentChange = (event) => {
     setNewComment(event.target.value);
   };
 
   const handleNewCommentSubmit = () => {
-    // 댓글 등록 로직을 구현하세요.
-    // 예시: setComments([...comments, comment]);
+    fetchData(`/api/comment/${postId}`, setComments, selectedUser.role, {
+      method: "POST",
+      body: JSON.stringify({ content: newComment, author_id: selectedUser.id }),
+    });
+
     setNewComment("");
   };
 
@@ -28,7 +36,6 @@ export default function CommentCard({ comments, selectedUser }) {
       );
       setCommentsWithAuthor(updatedComments);
     };
-
     fetchAuthors();
   }, [comments]);
 

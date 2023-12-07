@@ -1,9 +1,46 @@
 import { useEffect, useState } from "react";
 import fetchData from "@/utils/fetchData";
 
-function ContactCard({ contact, selectedUser }) {
-  const handleConfirm = () => {};
-  const handleCancel = () => {};
+function ContactCard({ contact, selectedUser, setFetchedData }) {
+  const [student, setStudent] = useState(null);
+  const [studentProfile, setStudentProfile] = useState(null);
+  const [school, setSchool] = useState(null);
+  const [major, setMajor] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
+  const handleConfirm = async () => {
+    fetchData(
+      `/api/contact/studentId/${contact.student_id}`,
+      setFetchedData,
+      selectedUser.role,
+      {
+        method: "PUT",
+        body: {
+          status: "accepted",
+          lab_id: contact.lab_id,
+        },
+      },
+      "labContact"
+    );
+    setRefresh(!refresh);
+  };
+
+  const handleCancel = async () => {
+    fetchData(
+      `/api/contact/studentId/${contact.student_id}`,
+      setFetchedData,
+      selectedUser.role,
+      {
+        method: "PUT",
+        body: {
+          status: "rejected",
+          lab_id: contact.lab_id,
+        },
+      },
+      "labContact"
+    );
+    setRefresh(!refresh);
+  };
 
   let cardColor;
   let statusMessage;
@@ -26,34 +63,41 @@ function ContactCard({ contact, selectedUser }) {
       break;
   }
 
-  const [student, setStudent] = useState(null);
-  const [studentProfile, setStudentProfile] = useState(null);
-  const [school, setSchool] = useState(null);
-  const [major, setMajor] = useState(null);
-
-  useEffect(() => {
-    fetchData(`/api/user/${contact.student_id}`, setStudent, selectedUser.role);
-    fetchData(
-      `/api/profile/${contact.student_id}`,
-      setStudentProfile,
-      selectedUser.role
-    );
-  }, [contact]);
-
-  useEffect(() => {
-    if (studentProfile) {
+  useEffect(
+    () => {
       fetchData(
-        `/api/school/${studentProfile.school_id}`,
-        setSchool,
+        `/api/user/${contact.student_id}`,
+        setStudent,
         selectedUser.role
       );
       fetchData(
-        `/api/major/${studentProfile.major_id}`,
-        setMajor,
+        `/api/profile/${contact.student_id}`,
+        setStudentProfile,
         selectedUser.role
       );
-    }
-  }, [studentProfile]);
+    },
+    [contact],
+    [refresh]
+  );
+
+  useEffect(
+    () => {
+      if (studentProfile) {
+        fetchData(
+          `/api/school/${studentProfile.school_id}`,
+          setSchool,
+          selectedUser.role
+        );
+        fetchData(
+          `/api/major/${studentProfile.major_id}`,
+          setMajor,
+          selectedUser.role
+        );
+      }
+    },
+    [studentProfile],
+    [refresh]
+  );
 
   return (
     <div
@@ -97,7 +141,11 @@ function ContactCard({ contact, selectedUser }) {
   );
 }
 
-export default function LabContactList({ fetchedData, selectedUser }) {
+export default function LabContactList({
+  fetchedData,
+  setFetchedData,
+  selectedUser,
+}) {
   return (
     <div className="flex flex-col">
       {fetchedData &&
@@ -106,6 +154,7 @@ export default function LabContactList({ fetchedData, selectedUser }) {
           <ContactCard
             key={index}
             contact={contact}
+            setFetchedData={setFetchedData}
             selectedUser={selectedUser}
           />
         ))}
