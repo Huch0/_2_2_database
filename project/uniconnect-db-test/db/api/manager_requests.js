@@ -1,4 +1,4 @@
-import { Manager_requests , Users , Labs } from "../models/index.js";
+import { Manager_requests, Users, Labs } from "../models/index.js";
 
 export async function getAllManager_requests(selectedRole) {
   const Manager_request = setManager_request(selectedRole);
@@ -13,12 +13,10 @@ export async function getAllManager_requests(selectedRole) {
 export async function createManager_request(selectedRole, manager_request) {
   const Manager_request = setManager_request(selectedRole);
 
-  const newManager_request = await Manager_request.create(
-    {
-      user_id: manager_request.user_id,
-      lab_id: manager_request.lab_id,
-    }
-  );
+  const newManager_request = await Manager_request.create({
+    user_id: manager_request.user_id,
+    lab_id: manager_request.lab_id,
+  });
 
   return newManager_request;
 }
@@ -32,34 +30,26 @@ export async function manageManager_request(selectedRole, mangage_request) {
   const user_id = mangage_request.user_id;
   const lab_id = mangage_request.lab_id;
 
-  if(status === "cancled"){
-    const cancleManager_request = await Manager_request.destroy(
-      {
-        where: { user_id: user_id }        
-      }
-    );
+  if (status === "cancled") {
+    const cancleManager_request = await Manager_request.destroy({
+      where: { user_id: user_id },
+    });
     return cancleManager_request;
-  }
-  else if(status === "confirmed"){
-    await User.update(
-      { role: "lab_manager" },
-      { where: { id: user_id } }
-    );
+  } else if (status === "confirmed") {
+    await User.update({ role: "lab_manager" }, { where: { id: user_id } });
 
-    await Lab.update(
-      { manager_id: user_id },
-      { where: { id: lab_id } }
-    );
-    
-    await Manager_request.destroy(
-      {
-        where: {
-          user_id: user_id,
-        },  
-      }
-    );
-  };
-  return null;
+    await Lab.update({ manager_id: user_id }, { where: { id: lab_id } });
+
+    await Manager_request.destroy({
+      where: {
+        user_id: user_id,
+      },
+    });
+  }
+
+  const updatedRequestsList = await getAllManager_requests(selectedRole);
+
+  return updatedRequestsList;
 }
 
 function setManager_request(selectedRole) {
@@ -119,7 +109,6 @@ function selectUser(selectedRole) {
 
   return User;
 }
-
 
 function selectLab(selectedRole) {
   let Lab = null;
