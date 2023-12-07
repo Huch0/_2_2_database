@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import fetchData from "@/utils/fetchData";
 
-export default function CommentCard({ comments, setComments,  selectedUser, postId }) {
+export default function CommentCard({
+  comments,
+  setComments,
+  selectedUser,
+  postId,
+}) {
   const [newComment, setNewComment] = useState("");
   const [commentsWithAuthor, setCommentsWithAuthor] = useState([]);
   const handleNewCommentChange = (event) => {
@@ -12,12 +17,9 @@ export default function CommentCard({ comments, setComments,  selectedUser, post
   const handleNewCommentSubmit = () => {
     fetchData(`/api/comment/${postId}`, setComments, selectedUser.role, {
       method: "POST",
-      body: JSON.stringify(
-        { content: newComment, 
-          author_id: selectedUser.id 
-        }),
+      body: JSON.stringify({ content: newComment, author_id: selectedUser.id }),
     });
-    
+
     setNewComment("");
   };
 
